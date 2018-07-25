@@ -914,13 +914,14 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                         Sz = file.ReadLine()
                         Form2.TextBox1.Text = Sz
                     End If
-                    If LCase(Sz) = "[radio]" Then
+                End If
+                If LCase(Sz) = "[radio]" Then
                         If Not file.EndOfStream Then
-                            Sz = file.ReadLine()
-                            Form2.Radio.Text = Sz
+                        Sz = file.ReadLine()
+                        Form2.Radio.Text = Sz
                         End If
                     End If
-                End If
+
             End While
         End If
         file.Close() '--- URL ---

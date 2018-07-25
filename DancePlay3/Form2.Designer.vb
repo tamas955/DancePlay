@@ -22,6 +22,7 @@ Partial Class Form2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.WOpac = New System.Windows.Forms.Label()
         Me.NavStop = New System.Windows.Forms.Button()
@@ -37,11 +38,13 @@ Partial Class Form2
         Me.Navi = New System.Windows.Forms.Button()
         Me.WBros = New System.Windows.Forms.WebBrowser()
         Me.Radio = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'WOpac
         '
         Me.WOpac.AutoSize = True
+        Me.WOpac.ForeColor = System.Drawing.Color.LimeGreen
         Me.WOpac.Location = New System.Drawing.Point(633, -10)
         Me.WOpac.Name = "WOpac"
         Me.WOpac.Size = New System.Drawing.Size(183, 15)
@@ -176,7 +179,9 @@ Partial Class Form2
         Me.Radio.Size = New System.Drawing.Size(258, 15)
         Me.Radio.TabIndex = 104
         Me.Radio.Text = "https://www.auckland80s.com/auckland-80s.html"
-        Me.Radio.Visible = False
+        '
+        'Timer1
+        '
         '
         'Form2
         '
@@ -222,4 +227,5 @@ Partial Class Form2
     Friend WithEvents Navi As Button
     Friend WithEvents WBros As WebBrowser
     Friend WithEvents Radio As Label
+    Friend WithEvents Timer1 As Timer
 End Class

@@ -1,8 +1,9 @@
 ﻿Public Class Form2
+    Dim rcnt As Long
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' WEB FORM LOAD
         ''''  Timer1.Enabled = True
-
+        Opacity = Form1.Opacity
     End Sub
 
     Private Sub Form2_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -69,8 +70,58 @@
             Opacity = Form1.Opacity
         End If
     End Sub
-
     Private Sub Fress_Click(sender As Object, e As EventArgs) Handles Fress.Click
         WBros.Refresh()
+    End Sub
+    Private Sub WBros_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WBros.DocumentCompleted
+        Dim s As String
+        Dim p As String
+        Dim l As Integer
+        If e.Url.LocalPath = "/watch" Then
+            s = e.Url.OriginalString
+            l = InStr(s, "?v=") + 3
+            s = Mid(s, l, 11)
+            '************* mode 0
+            TextBox1.Text = "https://youtu.be/" & Mid(e.Url.OriginalString, l, 250)
+            Label1.Text = "[ Add  to  PlayList ]"
+            OneX.Text = Chr(122)
+            '************* mode 1-2
+            p = TextBox1.Text
+            l = InStrRev(p, "/") + 1
+            p = Mid(p, l, 11)
+            If s <> p Then
+                ' If mode = 1 Then MPlayer.Bis6(True)
+                ' If mode = 2 Then MPlayer.Bis6(False)
+                ' WebBrowser1.Navigate("about:blank")
+            End If
+        End If
+    End Sub
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+        If Trim(TextBox1.Text) <> "" Then
+            ' Form1.ListBox1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
+            'Form1.ListBox3.Items.Add(TextBox1.Text)
+            Label1.Text = "[ Added to Redlist ]"
+        End If
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        '        'oooooooooooooooooooooooooo WEB TIMER ooooooooooooooooooooooooooooooooooooooooooo
+        If Asc(OneX.Text) = 129 Then
+            rcnt = rcnt - 1
+            If rcnt > 0 Then
+                If rcnt = 1 Then Stop '***** Secure TIMEOUT ************
+                rcnt = rcnt - 1
+            End If
+        End If
+    End Sub
+    Sub SetRcnt(t As Long)
+        rcnt = t ' **** set timeout ****
+    End Sub
+    Private Sub WOpac_MouseClick(sender As Object, e As MouseEventArgs) Handles WOpac.MouseClick
+        '$$$$$$$$$$$$$$$$$$ OPACITY $$$$$$$$$$$$$$$$
+        Dim X As Short
+        X = 100 - (0.5 * e.X)
+        If X < 33 Then X = 33
+        If X > 90 Then X = 100
+        Opacity = X / 100
     End Sub
 End Class
