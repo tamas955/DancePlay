@@ -125,7 +125,7 @@
             End If
         End If
     End Sub
-    Sub AfterEnd(A As Boolean) '<============== END POINT =================>
+    Sub AfterEnd(A As Boolean) '<=============== END POINT ==================>
         Dim Rv As Integer
         If Pict0.Visible Then
             If A Then PlayNext(True, True) Else PlayNext(False, True)
