@@ -11,7 +11,7 @@
         Dim Rs As String = Space(128)
         Dim s As String
         Dim q As Long
-        '* * System time * *
+        '* * System time * **
         SysTime.Text = TimeString
         If Poz1.ForeColor <> System.Drawing.Color.Black Then
             Rv = mciSendString("status asong mode", Rs, 128, 0)
