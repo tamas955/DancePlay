@@ -912,7 +912,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                 If LCase(Sz) = "[default]" Then
                     If Not file.EndOfStream Then
                         Sz = file.ReadLine()
-                        Form2.WBros.Url = New Uri(Sz)
+                        Form2.TextBox1.Text = Sz
                     End If
                     If LCase(Sz) = "[radio]" Then
                         If Not file.EndOfStream Then
@@ -934,7 +934,6 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     Private Sub Edit1_Leave(sender As Object, e As EventArgs) Handles Edit1.Leave
         TextEdited(True)
     End Sub
-
     Private Sub Edit2_Leave(sender As Object, e As EventArgs) Handles Edit2.Leave
         TextEdited(False)
     End Sub

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form2
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,13 +20,13 @@ Partial Class Form2
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.WOpac = New System.Windows.Forms.Label()
         Me.NavStop = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.OneX = New System.Windows.Forms.Button()
+        Me.Fress = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ForwardButton = New System.Windows.Forms.Button()
@@ -58,25 +58,25 @@ Partial Class Form2
         Me.NavStop.Text = "r"
         Me.NavStop.UseVisualStyleBackColor = True
         '
-        'Button2
+        'OneX
         '
-        Me.Button2.Font = New System.Drawing.Font("Wingdings", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.Button2.Location = New System.Drawing.Point(833, 12)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(42, 33)
-        Me.Button2.TabIndex = 101
-        Me.Button2.Text = ""
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.OneX.Font = New System.Drawing.Font("Wingdings", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
+        Me.OneX.Location = New System.Drawing.Point(833, 12)
+        Me.OneX.Name = "OneX"
+        Me.OneX.Size = New System.Drawing.Size(42, 33)
+        Me.OneX.TabIndex = 101
+        Me.OneX.Text = ""
+        Me.OneX.UseVisualStyleBackColor = True
         '
-        'Button1
+        'Fress
         '
-        Me.Button1.Font = New System.Drawing.Font("Webdings", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.Button1.Location = New System.Drawing.Point(107, 10)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(42, 33)
-        Me.Button1.TabIndex = 100
-        Me.Button1.Text = "q"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Fress.Font = New System.Drawing.Font("Webdings", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
+        Me.Fress.Location = New System.Drawing.Point(107, 10)
+        Me.Fress.Name = "Fress"
+        Me.Fress.Size = New System.Drawing.Size(42, 33)
+        Me.Fress.TabIndex = 100
+        Me.Fress.Text = "q"
+        Me.Fress.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -159,35 +159,36 @@ Partial Class Form2
         '
         'WBros
         '
-        Me.WBros.Location = New System.Drawing.Point(82, 50)
+        Me.WBros.Location = New System.Drawing.Point(58, 50)
         Me.WBros.MinimumSize = New System.Drawing.Size(23, 23)
         Me.WBros.Name = "WBros"
         Me.WBros.ScriptErrorsSuppressed = True
-        Me.WBros.Size = New System.Drawing.Size(793, 481)
+        Me.WBros.Size = New System.Drawing.Size(817, 481)
         Me.WBros.TabIndex = 91
         Me.WBros.Url = New System.Uri("about:blank", System.UriKind.Absolute)
-        Me.WBros.Visible = False
         '
         'Radio
         '
         Me.Radio.AutoSize = True
-        Me.Radio.Location = New System.Drawing.Point(540, 61)
+        Me.Radio.ForeColor = System.Drawing.Color.White
+        Me.Radio.Location = New System.Drawing.Point(541, 90)
         Me.Radio.Name = "Radio"
         Me.Radio.Size = New System.Drawing.Size(258, 15)
         Me.Radio.TabIndex = 104
         Me.Radio.Text = "https://www.auckland80s.com/auckland-80s.html"
+        Me.Radio.Visible = False
         '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.Black
+        Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(933, 519)
         Me.Controls.Add(Me.Radio)
         Me.Controls.Add(Me.WOpac)
         Me.Controls.Add(Me.NavStop)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.OneX)
+        Me.Controls.Add(Me.Fress)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ForwardButton)
@@ -209,8 +210,8 @@ Partial Class Form2
 
     Friend WithEvents WOpac As Label
     Friend WithEvents NavStop As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button1 As Button
+    Friend WithEvents OneX As Button
+    Friend WithEvents Fress As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents ForwardButton As Button
