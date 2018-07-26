@@ -8,8 +8,8 @@
     Private Sub Form2_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         '*** WEB FORM BEZÁRÁSA ***
         ''''' Timer1.Enabled = False
-        WBros.Navigate("about:blank")
-        TextBox1.Text = ""
+        'WBros.Navigate("about:blank")
+        'TextBox1.Text = ""
         ' **** lekezelések ****
         If Form1.WindowState = 1 Then
             Form1.WindowState = FormWindowState.Normal
@@ -23,8 +23,7 @@
     End Sub
     Private Sub Station_Click(sender As Object, e As EventArgs) Handles Station.Click
         '*** RÁDIÓ ÁLLOMÁS ***
-        Form1.StopMCI(1)
-        Form1.StopMCI(2)
+        SetMode0()
         If TextBox1.Text = Radio.Text Then
             TextBox1.Text = "https://www.auckland80s.com/auckland-80s.html"
             Label1.Text = "Auckland 80's radio"
@@ -39,31 +38,34 @@
         Label1.Text = Mid(TextBox1.Text, 13, 32)
     End Sub
     Private Sub HomeButton_Click(sender As Object, e As EventArgs) Handles HomeButton.Click
-        Form1.StopMCI(1)
-        Form1.StopMCI(2)
+        SetMode0()
         WBros.GoHome()
         Label1.Text = ""
         TextBox1.Text = "https://www.google.com/?hl=hu"
         '   WebBrowser1.Navigate(TextBox1.Text)
     End Sub
     Private Sub BackwardButton_Click(sender As Object, e As EventArgs) Handles BackwardButton.Click
+        SetMode0()
         WBros.GoBack()
     End Sub
     Private Sub ForwardButton_Click(sender As Object, e As EventArgs) Handles ForwardButton.Click
+        SetMode0()
         WBros.GoForward()
     End Sub
     Private Sub NavStop_Click(sender As Object, e As EventArgs) Handles NavStop.Click
+        SetMode0()
         WBros.Navigate("about:blank")
         TextBox1.Select()
     End Sub
     Private Sub OneX_Click(sender As Object, e As EventArgs) Handles OneX.Click
         If Asc(OneX.Text) = 129 Then
-            OneX.Text = Chr(122) ' nav mode
+            OneX.Text = Chr(122) '   ><
         Else
-            OneX.Text = Chr(129) ' play mode
+            OneX.Text = Chr(129) ' ( 1 )
         End If
     End Sub
     Private Sub Fress_Click(sender As Object, e As EventArgs) Handles Fress.Click
+        SetMode0()
         WBros.Refresh()
     End Sub
     Private Sub WBros_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WBros.DocumentCompleted
@@ -85,6 +87,7 @@
             Else
                 '************* mode 1-2 Document changed -> AfterEnd
                 If s <> p Then
+                    mode = 0
                     Form1.Set_WebStat(mode + 2)
                     WBros.Navigate("about:blank")
                 End If
@@ -94,7 +97,6 @@
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         '        'oooooooooooooooooooooooooo WEB TIMER ooooooooooooooooooooooooooooooooooooooooooo
         If Asc(OneX.Text) = 129 Then
-            rcnt = rcnt - 1
             Label1.Text = mode & " " & rcnt
             If rcnt > 0 Then
                 If rcnt = 1 Then
@@ -105,7 +107,8 @@
             End If
         End If
     End Sub
-    Sub SetRcnt(t As Long)
+    Sub SetRcnt(A As Short, t As Long)
+        mode = A
         rcnt = t ' **** set timeout ****
         OneX.Text = Chr(129)
     End Sub
@@ -124,5 +127,11 @@
     End Sub
     Private Sub AddList2_Click(sender As Object, e As EventArgs) Handles AddList2.Click
         Label1.Text = "Added to PlayList ♫"
+    End Sub
+    Sub SetMode0()
+        mode = 0
+        OneX.Text = 122
+        Form1.StopMCI(1)
+        Form1.StopMCI(2)
     End Sub
 End Class

@@ -95,7 +95,6 @@
                     If Pict0.TabStop Then
                         If (Cnt < 6) And (Paso.TabStop = False) Then
                             Volreg(Art, (100 - VolCtrl1.Value) / (7 - Cnt))
-                            Text = Paso.TabStop
                         End If
 
                     End If
@@ -128,7 +127,7 @@
             End If
         Else
             'Web megy
-            If Webstat = 3 Then PlayNext(True, True)
+            If Webstat = 3 Then Stop : PlayNext(True, True)
             If Webstat = 4 Then PlayNext(False, True)
         End If
     End Sub
@@ -183,8 +182,9 @@
                             AfterEnd(True)
                         End If
                     Else
+                        'TIPTXT1 WEB
                         Webstat = 1
-                        Form2.SetRcnt(20)
+                        Form2.SetRcnt(1, 50)
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♪ Web ♪"
                     End If
@@ -215,8 +215,9 @@
                             AfterEnd(False)
                         End If
                     Else
+                        'TIPTXT2 WEB
                         Webstat = 2
-                        Form2.SetRcnt(20)
+                        Form2.SetRcnt(2, 20)
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♫ Web ♫"
                     End If
@@ -295,7 +296,6 @@
                     If p > 100 Then p = 100
                     p = p * BLenght / 100
                     Rv = mciSendString("play bsong from " + Str(p), Rs, 128, 0)
-                    Text = p
                 End If
             End If
         End If '-- setposition area --
@@ -860,6 +860,63 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
             End If
         End If
     End Sub
+    Private Sub Box1_KeyDown(sender As Object, e As KeyEventArgs) Handles Box1.KeyDown
+        If Art Then
+            Select Case e.KeyValue
+                Case Keys.MediaPlayPause
+                    PauseMCI(1)
+                Case Keys.Space
+                    PauseMCI(1)
+                Case Keys.MediaPreviousTrack
+                    PlayNext(True, False)
+                Case Keys.MediaNextTrack
+                    PlayNext(True, True)
+                Case Keys.MediaStop
+                    StopMCI(1)
+                Case Keys.Play
+                    PlayMCI(1)
+                Case Keys.Enter
+                    PlayMCI(1)
+            End Select
+        Else
+            Select Case e.KeyValue
+                Case Keys.MediaPlayPause
+                    PauseMCI(2)
+                Case Keys.Space
+                    PauseMCI(2)
+                Case Keys.MediaPreviousTrack
+                    PlayNext(False, False)
+                Case Keys.MediaNextTrack
+                    PlayNext(False, True)
+                Case Keys.MediaStop
+                    StopMCI(2)
+                Case Keys.Play
+                    PlayMCI(2)
+                Case Keys.Enter
+                    PlayMCI(2)
+            End Select
+        End If
+        Select Case e.KeyValue
+            Case Keys.P
+                Paso_Click(sender, e)
+            Case Keys.W
+                Bell_Click(sender, e)
+            Case Keys.Escape
+                If Pict0.Visible Then
+                    Pict0_Click(sender, e)
+                Else
+                    BckTime_Click(sender, e)
+                End If
+            Case Keys.R
+                Rpt1_Click(sender, e)
+            Case Keys.L
+                Lst1_Click(sender, e)
+        End Select
+
+    End Sub
+    Private Sub Box2_KeyDown(sender As Object, e As KeyEventArgs) Handles Box2.KeyDown
+        Box1_KeyDown(sender, e)
+    End Sub
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '#################  FORM LOAD INIT #################
         Dim file As System.IO.StreamReader
@@ -1360,6 +1417,15 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
             file.Close()
         End If
     End Sub
+    Private Sub Box1_Enter(sender As Object, e As EventArgs) Handles Box1.Enter
+        BoxTxt1.BackColor = System.Drawing.Color.DarkRed
+        BoxTxt2.BackColor = System.Drawing.Color.Black
+    End Sub
+
+    Private Sub Box2_Enter(sender As Object, e As EventArgs) Handles Box2.Enter
+        BoxTxt2.BackColor = System.Drawing.Color.DarkBlue
+        BoxTxt1.BackColor = System.Drawing.Color.Black
+    End Sub
     Private Sub Box1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Box1.SelectedIndexChanged
         ' ***** index1 change
         Dim s As String
@@ -1524,76 +1590,6 @@ tova:
             PlayMCI(2)
         End If
     End Sub
-    Private Sub Box1_KeyDown(sender As Object, e As KeyEventArgs) Handles Box1.KeyDown
-        If Art Then
-            Select Case e.KeyValue
-                Case Keys.MediaPlayPause
-                    PauseMCI(1)
-                Case Keys.Space
-                    PauseMCI(1)
-                Case Keys.MediaPreviousTrack
-                    PlayNext(True, False)
-                Case Keys.MediaNextTrack
-                    PlayNext(True, True)
-                Case Keys.MediaStop
-                    StopMCI(1)
-                Case Keys.Play
-                    PlayMCI(1)
-                Case Keys.Enter
-                    PlayMCI(1)
-            End Select
-        Else
-            Select Case e.KeyValue
-                Case Keys.MediaPlayPause
-                    PauseMCI(2)
-                Case Keys.Space
-                    PauseMCI(2)
-                Case Keys.MediaPreviousTrack
-                    PlayNext(False, False)
-                Case Keys.MediaNextTrack
-                    PlayNext(False, True)
-                Case Keys.MediaStop
-                    StopMCI(2)
-                Case Keys.Play
-                    PlayMCI(2)
-                Case Keys.Enter
-                    PlayMCI(2)
-            End Select
-        End If
-        Select Case e.KeyValue
-            Case Keys.P
-                Paso_Click(sender, e)
-            Case Keys.W
-                Bell_Click(sender, e)
-            Case Keys.Escape
-                If Pict0.Visible Then
-                    Pict0_Click(sender, e)
-                Else
-                    BckTime_Click(sender, e)
-                End If
-            Case Keys.R
-                Rpt1_Click(sender, e)
-            Case Keys.L
-                Lst1_Click(sender, e)
-        End Select
-
-    End Sub
-    Private Sub Box2_KeyDown(sender As Object, e As KeyEventArgs) Handles Box2.KeyDown
-        Text = "2/" & e.KeyValue
-        Box1_KeyDown(sender, e)
-    End Sub
-
-    Private Sub Box1_Enter(sender As Object, e As EventArgs) Handles Box1.Enter
-        BoxTxt1.BackColor = System.Drawing.Color.DarkRed
-        BoxTxt2.BackColor = System.Drawing.Color.Black
-    End Sub
-
-    Private Sub Box2_Enter(sender As Object, e As EventArgs) Handles Box2.Enter
-        BoxTxt2.BackColor = System.Drawing.Color.DarkBlue
-        BoxTxt1.BackColor = System.Drawing.Color.Black
-    End Sub
-
-
 
     '@#@#@#@#@#@#@#@#@#@#  CLASS  #@#@#@#@#@#@#@#@#@#@#
 End Class
