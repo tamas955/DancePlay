@@ -185,6 +185,9 @@
                         'TIPTXT1 WEB
                         Webstat = 1
                         Form2.SetRcnt(1, 50)
+                        Text = s
+                        NowTxt1.Text = BoxTxt1.Text
+                        Form2.TextBox1.Text = s
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♪ Web ♪"
                     End If
@@ -217,7 +220,10 @@
                     Else
                         'TIPTXT2 WEB
                         Webstat = 2
-                        Form2.SetRcnt(2, 20)
+                        Form2.SetRcnt(1, 20)
+                        Text = s
+                        NowTxt2.Text = BoxTxt2.Text
+                        Form2.TextBox1.Text = s
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♫ Web ♫"
                     End If
@@ -681,7 +687,7 @@ NxFrame:
                             If Rd = 81 Then s = "ő" : GoTo karok
                             If Rd = 112 Then s = "Ű" : GoTo karok
                             If Rd = 113 Then s = "ű" : GoTo karok
-                            MsgBox("CHR " & Rd)
+                            ' MsgBox("CHR " & Rd)
 karok:
                         End If
                         If s <> Chr(0) Then Sz = Sz + s

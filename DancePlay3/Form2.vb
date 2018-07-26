@@ -17,10 +17,6 @@
             Form1.Show()
         End If
     End Sub
-    Private Sub Form2_ClientSizeChanged(sender As Object, e As EventArgs) Handles MyBase.ClientSizeChanged
-        WBros.Width = ClientSize.Width - 46
-        WBros.Height = ClientSize.Height - 60
-    End Sub
     Private Sub Station_Click(sender As Object, e As EventArgs) Handles Station.Click
         '*** RÁDIÓ ÁLLOMÁS ***
         SetMode0()
@@ -107,10 +103,9 @@
             End If
         End If
     End Sub
-    Sub SetRcnt(A As Short, t As Long)
-        mode = A
-        rcnt = t ' **** set timeout ****
-        OneX.Text = Chr(129)
+    Private Sub Form2_ClientSizeChanged(sender As Object, e As EventArgs) Handles MyBase.ClientSizeChanged
+        WBros.Width = ClientSize.Width - 46
+        WBros.Height = ClientSize.Height - 60
     End Sub
     Private Sub WOpac_MouseClick(sender As Object, e As MouseEventArgs) Handles WOpac.MouseClick
         '$$$$$$$$$$$$$$$$$$ OPACITY $$$$$$$$$$$$$$$$
@@ -133,5 +128,10 @@
         OneX.Text = 122
         Form1.StopMCI(1)
         Form1.StopMCI(2)
+    End Sub
+    Sub SetRcnt(A As Short, t As Long)
+        mode = A
+        rcnt = t ' **** set timeout ****
+        OneX.Text = Chr(129)
     End Sub
 End Class
