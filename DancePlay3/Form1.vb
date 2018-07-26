@@ -14,21 +14,21 @@
         Dim q As Long
         '* * System time * *
         SysTime.Text = TimeString
-        If Webstat = 0 Then
-            If Poz1.ForeColor <> System.Drawing.Color.Black Then
+        If Webstat = 0 Then ' web l. lejjebb
+            If Poz1.ForeColor <> System.Drawing.Color.Black Then 'nem fekete a csúszka
                 Rv = mciSendString("status asong mode", Rs, 128, 0)
                 If LCase(Mid(Rs, 1, 4)) = "stop" Then
                     Rv = mciSendString("close asong", 0, 0, 0)
-                    AfterEnd(True)
+                    AfterEnd(True) '                                 stop-hoz ért ->>
                 End If
                 If LCase(Mid(Rs, 1, 4)) = "play" Then
                     Rv = mciSendString("status asong position", Rs, 128, 0)
                     If InStr(Szhms(Val(Rs) / 1000), "Web") Then
                         NowTime.Text = "00:00:00"
-                    Else
+                    Else '                                          Played time kiírás
                         NowTime.Text = Szhms(Val(Rs) / 1000)
                         q = Fix((10 * Val(Rs) / (ALenght + 1)))
-                        Select Case q
+                        Select Case q'                              Played time - lemezjátszó kar
                             Case 2
                                 Pict1.Image = My.Resources.Arm02
                             Case 3
@@ -47,11 +47,11 @@
                                 Pict1.Image = My.Resources.Arm09
                         End Select
                     End If
-                    Poz1.Left = Box1.Left + (Val(Rs) / ((ALenght + 1) / Box1.Width))
-                    If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(True)
+                    Poz1.Left = Box1.Left + (Val(Rs) / ((ALenght + 1) / Box1.Width)) ' CSÚSZTATÁS o->
+                    If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(True) ' SZÁMLÁLÓ LEJÁRT ->>
                 End If
-            End If
-            If Poz2.ForeColor <> System.Drawing.Color.Black Then
+            End If '=============================================================================================
+            If Poz2.ForeColor <> System.Drawing.Color.Black Then '            - Bre is -
                 Rv = mciSendString("status bsong mode", Rs, 128, 0)
                 If LCase(Mid(Rs, 1, 4)) = "stop" Then
                     Rv = mciSendString("close bsong", 0, 0, 0)
@@ -86,7 +86,7 @@
                     End Select
                     If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(False)
                 End If
-            End If
+            End If  '=============================================================================================
 
             If Pict0.Visible = False Then
                 If Cnt > 0 Then
@@ -127,12 +127,28 @@
             End If
         Else
             'Web megy
-            If Webstat = 3 Then Webstat = 0 : PlayNext(True, True)
-            If Webstat = 4 Then Webstat = 0 : PlayNext(False, True)
+            If Webstat = 3 Then AfterEnd(True) ' Lejárt a biztonsági idő
+            If Webstat = 4 Then AfterEnd(False)
+            If Pict0.Visible = False Then
+                If Cnt > 0 Then
+                    BckTime.Text = Mid(Szhms(Cnt), 4, 5)
+                    Cnt = Cnt - 1
+                Else
+                    If (Webstat = 1) Or (Webstat = 3) Then AfterEnd(True)
+                    If (Webstat = 2) Or (Webstat = 4) Then AfterEnd(False)
+                End If
+            End If
         End If
+    End Sub
+    Sub Set_WebStat(q As Short) 'CALLED FROM WEBPLAYER
+        Webstat = q
     End Sub
     Sub AfterEnd(A As Boolean) '<=============== END POINT ==================>
         Dim Rv As Integer
+        If Webstat > 0 Then
+            Webstat = 0
+            Form2.SetRcnt(0, 0)
+        End If
         If Pict0.Visible Then
             If A Then PlayNext(True, True) Else PlayNext(False, True)
         Else
@@ -184,7 +200,8 @@
                     Else
                         'TIPTXT1 WEB
                         Webstat = 1
-                        Form2.SetRcnt(1, 10)
+                        Form2.SetRcnt(1, 500) ' BIZTONSÁGI IDŐ 
+                        Cnt = BackCtrl.Value
                         Text = s
                         NowTxt1.Text = Mid(Box1.Text, 11)
                         Form2.Label1.Text = "♪" & Mid(Box1.Text, 11)
@@ -221,7 +238,8 @@
                     Else
                         'TIPTXT2 WEB
                         Webstat = 2
-                        Form2.SetRcnt(2, 20)
+                        Form2.SetRcnt(2, 500) ' BIZTONSÁGI IDŐ 
+                        Cnt = BackCtrl.Value
                         Text = s
                         NowTxt2.Text = Mid(Box2.Text, 11)
                         Form2.Label1.Text = "♫ " & Mid(Box2.Text, 11)
@@ -232,12 +250,8 @@
                 End If
         End Select
     End Sub
-    Sub Set_WebStat(q As Short)
-        Webstat = q
-    End Sub
     Sub PauseMCI(Cm As Short)
         Dim Rv As Integer = 0
-
         If Cm = 1 Then
             If Poz1.ForeColor = System.Drawing.Color.Yellow Then
                 Rv = mciSendString("pause asong", 0, 0, 0)
@@ -259,17 +273,26 @@
     End Sub
     Sub StopMCI(Cm As Short)
         Dim Rv As Integer = 0
-        If Webstat = 0 Then
-            If Cm = 1 Then
-                Poz1.ForeColor = System.Drawing.Color.Black
-                NowTxt1.Text = "Dance Player"
-                TimTxt1.Text = "00:00:00"
-                Rv = mciSendString("stop asong", 0, 0, 0)
-                Rv = mciSendString("close asong", 0, 0, 0)
-                NowTime.Text = " ♪ ♪ ♪ ♪ ♪"
-                Pict1.Image = My.Resources.Arm00
+        If Webstat > 0 Then
+            'Web Stop from player
+            If (Webstat = 1) And (Cm = 1) Then
+                Form2.SetRcnt(0, 0)
             End If
-            If Cm = 2 Then
+            If (Webstat = 2) And (Cm = 2) Then
+                Form2.SetRcnt(0, 0)
+            End If
+            Webstat = 0
+        End If
+        If Cm = 1 Then
+            Poz1.ForeColor = System.Drawing.Color.Black
+            NowTxt1.Text = "Dance Player"
+            TimTxt1.Text = "00:00:00"
+            Rv = mciSendString("stop asong", 0, 0, 0)
+            Rv = mciSendString("close asong", 0, 0, 0)
+            NowTime.Text = " ♪ ♪ ♪ ♪ ♪"
+            Pict1.Image = My.Resources.Arm00
+        End If
+        If Cm = 2 Then
                 Poz2.ForeColor = System.Drawing.Color.Black
                 NowTxt2.Text = "Dance Player"
                 TimTxt2.Text = "00:00:00"
@@ -281,15 +304,6 @@
             BckTime.ForeColor = System.Drawing.Color.Aqua
             BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
             Cnt = 0
-        Else
-            'Web Stop from player
-            If (Webstat = 1) And (Cm = 1) Then
-                Form2.SetRcnt(0, 0)
-            End If
-            If (Webstat = 2) And (Cm = 2) Then
-                Form2.SetRcnt(0, 0)
-            End If
-        End If
     End Sub
     Private Sub Form1_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
         Dim x As Integer = 1000 * e.X / Width

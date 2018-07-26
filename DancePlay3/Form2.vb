@@ -42,15 +42,11 @@
         End If
     End Sub
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' WEB FORM LOAD
+        '*** WEB FORM LOAD ***
         Opacity = Form1.Opacity
     End Sub
     Private Sub Form2_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         '*** WEB FORM BEZÁRÁSA ***
-        ''''' Timer1.Enabled = False
-        'WBros.Navigate("about:blank")
-        'TextBox1.Text = ""
-        ' **** lekezelések ****
         If Form1.WindowState = 1 Then
             Form1.WindowState = FormWindowState.Normal
         Else
