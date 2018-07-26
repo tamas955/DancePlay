@@ -39,6 +39,8 @@ Partial Class Form2
         Me.WBros = New System.Windows.Forms.WebBrowser()
         Me.Radio = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.AddList1 = New System.Windows.Forms.Label()
+        Me.AddList2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'WOpac
@@ -54,7 +56,7 @@ Partial Class Form2
         'NavStop
         '
         Me.NavStop.Font = New System.Drawing.Font("Webdings", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.NavStop.Location = New System.Drawing.Point(637, 9)
+        Me.NavStop.Location = New System.Drawing.Point(674, 8)
         Me.NavStop.Name = "NavStop"
         Me.NavStop.Size = New System.Drawing.Size(42, 33)
         Me.NavStop.TabIndex = 102
@@ -64,7 +66,7 @@ Partial Class Form2
         'OneX
         '
         Me.OneX.Font = New System.Drawing.Font("Wingdings", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.OneX.Location = New System.Drawing.Point(833, 12)
+        Me.OneX.Location = New System.Drawing.Point(870, 11)
         Me.OneX.Name = "OneX"
         Me.OneX.Size = New System.Drawing.Size(42, 33)
         Me.OneX.TabIndex = 101
@@ -74,7 +76,7 @@ Partial Class Form2
         'Fress
         '
         Me.Fress.Font = New System.Drawing.Font("Webdings", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.Fress.Location = New System.Drawing.Point(107, 10)
+        Me.Fress.Location = New System.Drawing.Point(59, 8)
         Me.Fress.Name = "Fress"
         Me.Fress.Size = New System.Drawing.Size(42, 33)
         Me.Fress.TabIndex = 100
@@ -86,7 +88,7 @@ Partial Class Form2
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Cambria", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.AliceBlue
-        Me.Label2.Location = New System.Drawing.Point(156, -2)
+        Me.Label2.Location = New System.Drawing.Point(182, 2)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(33, 15)
         Me.Label2.TabIndex = 99
@@ -97,7 +99,7 @@ Partial Class Form2
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(202, -7)
+        Me.Label1.Location = New System.Drawing.Point(228, -1)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(13, 19)
         Me.Label1.TabIndex = 98
@@ -106,7 +108,7 @@ Partial Class Form2
         'ForwardButton
         '
         Me.ForwardButton.Font = New System.Drawing.Font("Webdings", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.ForwardButton.Location = New System.Drawing.Point(735, 10)
+        Me.ForwardButton.Location = New System.Drawing.Point(772, 9)
         Me.ForwardButton.Name = "ForwardButton"
         Me.ForwardButton.Size = New System.Drawing.Size(42, 33)
         Me.ForwardButton.TabIndex = 97
@@ -116,7 +118,7 @@ Partial Class Form2
         'BackwardButton
         '
         Me.BackwardButton.Font = New System.Drawing.Font("Webdings", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.BackwardButton.Location = New System.Drawing.Point(686, 9)
+        Me.BackwardButton.Location = New System.Drawing.Point(723, 8)
         Me.BackwardButton.Name = "BackwardButton"
         Me.BackwardButton.Size = New System.Drawing.Size(42, 33)
         Me.BackwardButton.TabIndex = 96
@@ -126,7 +128,7 @@ Partial Class Form2
         'HomeButton
         '
         Me.HomeButton.Font = New System.Drawing.Font("Century", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
-        Me.HomeButton.Location = New System.Drawing.Point(58, 9)
+        Me.HomeButton.Location = New System.Drawing.Point(11, 8)
         Me.HomeButton.Name = "HomeButton"
         Me.HomeButton.Size = New System.Drawing.Size(42, 33)
         Me.HomeButton.TabIndex = 95
@@ -135,15 +137,15 @@ Partial Class Form2
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(156, 18)
+        Me.TextBox1.Location = New System.Drawing.Point(183, 18)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(424, 21)
+        Me.TextBox1.Size = New System.Drawing.Size(436, 21)
         Me.TextBox1.TabIndex = 94
         '
         'Station
         '
         Me.Station.Font = New System.Drawing.Font("Webdings", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.Station.Location = New System.Drawing.Point(784, 12)
+        Me.Station.Location = New System.Drawing.Point(821, 11)
         Me.Station.Name = "Station"
         Me.Station.Size = New System.Drawing.Size(42, 33)
         Me.Station.TabIndex = 93
@@ -153,7 +155,7 @@ Partial Class Form2
         'Navi
         '
         Me.Navi.Font = New System.Drawing.Font("Wingdings 3", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.Navi.Location = New System.Drawing.Point(588, 9)
+        Me.Navi.Location = New System.Drawing.Point(625, 8)
         Me.Navi.Name = "Navi"
         Me.Navi.Size = New System.Drawing.Size(42, 33)
         Me.Navi.TabIndex = 92
@@ -162,11 +164,11 @@ Partial Class Form2
         '
         'WBros
         '
-        Me.WBros.Location = New System.Drawing.Point(58, 50)
+        Me.WBros.Location = New System.Drawing.Point(26, 50)
         Me.WBros.MinimumSize = New System.Drawing.Size(23, 23)
         Me.WBros.Name = "WBros"
         Me.WBros.ScriptErrorsSuppressed = True
-        Me.WBros.Size = New System.Drawing.Size(817, 481)
+        Me.WBros.Size = New System.Drawing.Size(861, 481)
         Me.WBros.TabIndex = 91
         Me.WBros.Url = New System.Uri("about:blank", System.UriKind.Absolute)
         '
@@ -174,21 +176,54 @@ Partial Class Form2
         '
         Me.Radio.AutoSize = True
         Me.Radio.ForeColor = System.Drawing.Color.White
-        Me.Radio.Location = New System.Drawing.Point(541, 90)
+        Me.Radio.Location = New System.Drawing.Point(337, 534)
         Me.Radio.Name = "Radio"
         Me.Radio.Size = New System.Drawing.Size(258, 15)
         Me.Radio.TabIndex = 104
         Me.Radio.Text = "https://www.auckland80s.com/auckland-80s.html"
+        Me.Radio.Visible = False
         '
         'Timer1
         '
+        '
+        'AddList1
+        '
+        Me.AddList1.AutoSize = True
+        Me.AddList1.BackColor = System.Drawing.Color.Black
+        Me.AddList1.Font = New System.Drawing.Font("Wingdings 2", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
+        Me.AddList1.ForeColor = System.Drawing.Color.Salmon
+        Me.AddList1.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.AddList1.Location = New System.Drawing.Point(106, 2)
+        Me.AddList1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.AddList1.Name = "AddList1"
+        Me.AddList1.Size = New System.Drawing.Size(34, 22)
+        Me.AddList1.TabIndex = 110
+        Me.AddList1.Text = "4"
+        Me.AddList1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'AddList2
+        '
+        Me.AddList2.AutoSize = True
+        Me.AddList2.BackColor = System.Drawing.Color.Black
+        Me.AddList2.Font = New System.Drawing.Font("Wingdings 2", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
+        Me.AddList2.ForeColor = System.Drawing.Color.CornflowerBlue
+        Me.AddList2.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.AddList2.Location = New System.Drawing.Point(144, 2)
+        Me.AddList2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.AddList2.Name = "AddList2"
+        Me.AddList2.Size = New System.Drawing.Size(34, 22)
+        Me.AddList2.TabIndex = 122
+        Me.AddList2.Text = "4"
+        Me.AddList2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
-        Me.ClientSize = New System.Drawing.Size(933, 519)
+        Me.ClientSize = New System.Drawing.Size(931, 545)
+        Me.Controls.Add(Me.AddList2)
+        Me.Controls.Add(Me.AddList1)
         Me.Controls.Add(Me.Radio)
         Me.Controls.Add(Me.WOpac)
         Me.Controls.Add(Me.NavStop)
@@ -228,4 +263,6 @@ Partial Class Form2
     Friend WithEvents WBros As WebBrowser
     Friend WithEvents Radio As Label
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents AddList1 As Label
+    Friend WithEvents AddList2 As Label
 End Class

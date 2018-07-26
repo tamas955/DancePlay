@@ -6,6 +6,7 @@
     Dim BLenght As Long = 0
     Dim Cnt As Long = 0
     Dim Art As Boolean = True
+    Dim Webstat As Short = 0
     Private Sub PlyTimer_Tick(sender As Object, e As EventArgs) Handles PlyTimer.Tick
         Dim Rv As Integer = 0
         Dim Rs As String = Space(128)
@@ -13,116 +14,122 @@
         Dim q As Long
         '* * System time * *
         SysTime.Text = TimeString
-        If Poz1.ForeColor <> System.Drawing.Color.Black Then
-            Rv = mciSendString("status asong mode", Rs, 128, 0)
-            If LCase(Mid(Rs, 1, 4)) = "stop" Then
-                Rv = mciSendString("close asong", 0, 0, 0)
-                AfterEnd(True)
+        If Webstat = 0 Then
+            If Poz1.ForeColor <> System.Drawing.Color.Black Then
+                Rv = mciSendString("status asong mode", Rs, 128, 0)
+                If LCase(Mid(Rs, 1, 4)) = "stop" Then
+                    Rv = mciSendString("close asong", 0, 0, 0)
+                    AfterEnd(True)
+                End If
+                If LCase(Mid(Rs, 1, 4)) = "play" Then
+                    Rv = mciSendString("status asong position", Rs, 128, 0)
+                    If InStr(Szhms(Val(Rs) / 1000), "Web") Then
+                        NowTime.Text = "00:00:00"
+                    Else
+                        NowTime.Text = Szhms(Val(Rs) / 1000)
+                        q = Fix((10 * Val(Rs) / (ALenght + 1)))
+                        Select Case q
+                            Case 2
+                                Pict1.Image = My.Resources.Arm02
+                            Case 3
+                                Pict1.Image = My.Resources.Arm03
+                            Case 4
+                                Pict1.Image = My.Resources.Arm04
+                            Case 5
+                                Pict1.Image = My.Resources.Arm05
+                            Case 6
+                                Pict1.Image = My.Resources.Arm06
+                            Case 7
+                                Pict1.Image = My.Resources.Arm07
+                            Case 8
+                                Pict1.Image = My.Resources.Arm08
+                            Case 9
+                                Pict1.Image = My.Resources.Arm09
+                        End Select
+                    End If
+                    Poz1.Left = Box1.Left + (Val(Rs) / ((ALenght + 1) / Box1.Width))
+                    If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(True)
+                End If
             End If
-            If LCase(Mid(Rs, 1, 4)) = "play" Then
-                Rv = mciSendString("status asong position", Rs, 128, 0)
-                If InStr(Szhms(Val(Rs) / 1000), "Web") Then
-                    NowTime.Text = "00:00:00"
-                Else
-                    NowTime.Text = Szhms(Val(Rs) / 1000)
-                    q = Fix((10 * Val(Rs) / (ALenght + 1)))
+            If Poz2.ForeColor <> System.Drawing.Color.Black Then
+                Rv = mciSendString("status bsong mode", Rs, 128, 0)
+                If LCase(Mid(Rs, 1, 4)) = "stop" Then
+                    Rv = mciSendString("close bsong", 0, 0, 0)
+                    AfterEnd(False)
+                End If
+                If LCase(Mid(Rs, 1, 4)) = "play" Then
+                    Rv = mciSendString("status bsong position", Rs, 128, 0)
+                    If InStr(Szhms(Val(Rs) / 1000), "Web") Then
+                        NowTime.Text = "00:00:00"
+                    Else
+                        NowTime.Text = Szhms(Val(Rs) / 1000)
+                    End If
+                    Poz2.Left = Box2.Left + (Val(Rs) / ((BLenght + 1) / Box2.Width))
+                    q = Fix((10 * Val(Rs) / (BLenght + 1)))
                     Select Case q
                         Case 2
-                            Pict1.Image = My.Resources.Arm02
+                            Pict2.Image = My.Resources.Arm02
                         Case 3
-                            Pict1.Image = My.Resources.Arm03
+                            Pict2.Image = My.Resources.Arm03
                         Case 4
-                            Pict1.Image = My.Resources.Arm04
+                            Pict2.Image = My.Resources.Arm04
                         Case 5
-                            Pict1.Image = My.Resources.Arm05
+                            Pict2.Image = My.Resources.Arm05
                         Case 6
-                            Pict1.Image = My.Resources.Arm06
+                            Pict2.Image = My.Resources.Arm06
                         Case 7
-                            Pict1.Image = My.Resources.Arm07
+                            Pict2.Image = My.Resources.Arm07
                         Case 8
-                            Pict1.Image = My.Resources.Arm08
+                            Pict2.Image = My.Resources.Arm08
                         Case 9
-                            Pict1.Image = My.Resources.Arm09
+                            Pict2.Image = My.Resources.Arm09
                     End Select
+                    If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(False)
                 End If
-                Poz1.Left = Box1.Left + (Val(Rs) / ((ALenght + 1) / Box1.Width))
-                If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(True)
             End If
-        End If
-        If Poz2.ForeColor <> System.Drawing.Color.Black Then
-            Rv = mciSendString("status bsong mode", Rs, 128, 0)
-            If LCase(Mid(Rs, 1, 4)) = "stop" Then
-                Rv = mciSendString("close bsong", 0, 0, 0)
-                AfterEnd(False)
-            End If
-            If LCase(Mid(Rs, 1, 4)) = "play" Then
-                Rv = mciSendString("status bsong position", Rs, 128, 0)
-                If InStr(Szhms(Val(Rs) / 1000), "Web") Then
-                    NowTime.Text = "00:00:00"
+
+            If Pict0.Visible = False Then
+                If Cnt > 0 Then
+                    BckTime.Text = Mid(Szhms(Cnt), 4, 5)
+                    Cnt = Cnt - 1
+                    If Pict0.TabStop Then
+                        If (Cnt < 6) And (Paso.TabStop = False) Then
+                            Volreg(Art, (100 - VolCtrl1.Value) / (7 - Cnt))
+                            Text = Paso.TabStop
+                        End If
+
+                    End If
+                    If (Pict0.TabStop = False) And (Bell.TabStop = False) Then
+                        If (Cnt / 10) = Int(Cnt / 10) Then
+                            Rv = mciSendString("play bell from 0", vbNullString, 0, 0)
+                        End If
+                        If Cnt = 5 Then
+                            Rv = mciSendString("stop bell", 0, 0, 0)
+                            Rv = mciSendString("close bell", 0, 0, 0)
+                            Rv = mciSendString("open " & Chr(34) & "bell02.mp3" & Chr(34) & " type mpegvideo alias bell", vbNullString, 0, 0)
+                        End If
+                        If Cnt = 4 Then Rv = mciSendString("play bell", vbNullString, 0, 0)
+                        If Cnt = 3 Then
+                            Rv = mciSendString("stop bell", 0, 0, 0)
+                            Rv = mciSendString("close bell", 0, 0, 0)
+                            Rv = mciSendString("open " & Chr(34) & "bell03.mp3" & Chr(34) & " type mpegvideo alias bell", vbNullString, 0, 0)
+                        End If
+                        If Cnt = 2 Then Rv = mciSendString("open " & Chr(34) & "bell02.mp3" & Chr(34) & " type mpegvideo alias bell", vbNullString, 0, 0)
+                        If Cnt = 0 Then Rv = mciSendString("play bell", vbNullString, 0, 0)
+                    End If
                 Else
-                    NowTime.Text = Szhms(Val(Rs) / 1000)
-                End If
-                Poz2.Left = Box2.Left + (Val(Rs) / ((BLenght + 1) / Box2.Width))
-                q = Fix((10 * Val(Rs) / (BLenght + 1)))
-                Select Case q
-                    Case 2
-                        Pict2.Image = My.Resources.Arm02
-                    Case 3
-                        Pict2.Image = My.Resources.Arm03
-                    Case 4
-                        Pict2.Image = My.Resources.Arm04
-                    Case 5
-                        Pict2.Image = My.Resources.Arm05
-                    Case 6
-                        Pict2.Image = My.Resources.Arm06
-                    Case 7
-                        Pict2.Image = My.Resources.Arm07
-                    Case 8
-                        Pict2.Image = My.Resources.Arm08
-                    Case 9
-                        Pict2.Image = My.Resources.Arm09
-                End Select
-                If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(False)
-            End If
-        End If
-
-        If Pict0.Visible = False Then
-            If Cnt > 0 Then
-                BckTime.Text = Mid(Szhms(Cnt), 4, 5)
-                Cnt = Cnt - 1
-                If Pict0.TabStop Then
-                    If (Cnt < 6) And (Paso.TabStop = False) Then
-                        Volreg(Art, (100 - VolCtrl1.Value) / (7 - Cnt))
-                        Text = Paso.TabStop
-                    End If
-
-                End If
-                If (Pict0.TabStop = False) And (Bell.TabStop = False) Then
-                    If (Cnt / 10) = Int(Cnt / 10) Then
-                        Rv = mciSendString("play bell from 0", vbNullString, 0, 0)
-                    End If
-                    If Cnt = 5 Then
+                    If (Pict0.TabStop = False) And BckTime.ForeColor = System.Drawing.Color.Yellow Then
                         Rv = mciSendString("stop bell", 0, 0, 0)
                         Rv = mciSendString("close bell", 0, 0, 0)
-                        Rv = mciSendString("open " & Chr(34) & "bell02.mp3" & Chr(34) & " type mpegvideo alias bell", vbNullString, 0, 0)
+                        BckTime.ForeColor = System.Drawing.Color.Aqua
+                        PlayNext(Art, True)
                     End If
-                    If Cnt = 4 Then Rv = mciSendString("play bell", vbNullString, 0, 0)
-                    If Cnt = 3 Then
-                        Rv = mciSendString("stop bell", 0, 0, 0)
-                        Rv = mciSendString("close bell", 0, 0, 0)
-                        Rv = mciSendString("open " & Chr(34) & "bell03.mp3" & Chr(34) & " type mpegvideo alias bell", vbNullString, 0, 0)
-                    End If
-                    If Cnt = 2 Then Rv = mciSendString("open " & Chr(34) & "bell02.mp3" & Chr(34) & " type mpegvideo alias bell", vbNullString, 0, 0)
-                    If Cnt = 0 Then Rv = mciSendString("play bell", vbNullString, 0, 0)
-                End If
-            Else
-                If (Pict0.TabStop = False) And BckTime.ForeColor = System.Drawing.Color.Yellow Then
-                    Rv = mciSendString("stop bell", 0, 0, 0)
-                    Rv = mciSendString("close bell", 0, 0, 0)
-                    BckTime.ForeColor = System.Drawing.Color.Aqua
-                    PlayNext(Art, True)
                 End If
             End If
+        Else
+            'Web megy
+            If Webstat = 3 Then PlayNext(True, True)
+            If Webstat = 4 Then PlayNext(False, True)
         End If
     End Sub
     Sub AfterEnd(A As Boolean) '<=============== END POINT ==================>
@@ -176,9 +183,10 @@
                             AfterEnd(True)
                         End If
                     Else
+                        Webstat = 1
+                        Form2.SetRcnt(20)
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♪ Web ♪"
-                        ' AfterEnd(True)
                     End If
                 End If
             Case 2
@@ -207,11 +215,16 @@
                             AfterEnd(False)
                         End If
                     Else
+                        Webstat = 2
+                        Form2.SetRcnt(20)
+                        Form2.WBros.Navigate(s)
                         NowTime.Text = "♫ Web ♫"
-                        AfterEnd(False)
                     End If
                 End If
         End Select
+    End Sub
+    Sub Set_WebStat(q As Short)
+        Webstat = q
     End Sub
     Sub PauseMCI(Cm As Short)
         Dim Rv As Integer = 0
@@ -931,6 +944,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         Poz2.ForeColor = System.Drawing.Color.Black
         NowTime.Text = "♪ ← → ♫"
         PlyTimer.Enabled = True
+        Form2.Timer1.Enabled = True
     End Sub
     Private Sub Edit1_Leave(sender As Object, e As EventArgs) Handles Edit1.Leave
         TextEdited(True)
