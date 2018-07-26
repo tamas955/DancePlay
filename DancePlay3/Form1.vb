@@ -127,15 +127,17 @@
             End If
         Else
             'Web megy
-            If Webstat = 3 Then AfterEnd(True) ' Lejárt a biztonsági idő
+            If Webstat = 3 Then AfterEnd(True) ' Lejárt a web
             If Webstat = 4 Then AfterEnd(False)
             If Pict0.Visible = False Then
-                If Cnt > 0 Then
-                    BckTime.Text = Mid(Szhms(Cnt), 4, 5)
-                    Cnt = Cnt - 1
-                Else
-                    If (Webstat = 1) Or (Webstat = 3) Then AfterEnd(True)
-                    If (Webstat = 2) Or (Webstat = 4) Then AfterEnd(False)
+                If Paso.TabStop = False Then
+                    If Cnt > 0 Then
+                        BckTime.Text = Mid(Szhms(Cnt), 4, 5)
+                        Cnt = Cnt - 1
+                    Else
+                        If (Webstat = 1) Or (Webstat = 3) Then AfterEnd(True)
+                        If (Webstat = 2) Or (Webstat = 4) Then AfterEnd(False)
+                    End If
                 End If
             End If
         End If

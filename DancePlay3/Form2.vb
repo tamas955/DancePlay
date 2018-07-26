@@ -47,6 +47,7 @@
     End Sub
     Private Sub Form2_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         '*** WEB FORM BEZÁRÁSA ***
+        If mode > 0 Then Form1.Set_WebStat(mode + 2)
         If Form1.WindowState = 1 Then
             Form1.WindowState = FormWindowState.Normal
         Else
