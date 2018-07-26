@@ -1,6 +1,46 @@
 ﻿Public Class Form2
     Dim rcnt As Long
     Dim mode As Short = 0
+    Private Sub WBros_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WBros.DocumentCompleted
+        Dim s As String
+        Dim p As String
+        Dim l As Integer
+        If e.Url.LocalPath = "/watch" Then
+            s = e.Url.OriginalString
+            l = InStr(s, "?v=") + 3
+            s = Mid(s, l, 11)
+            '<><><><> Document same as?
+            p = TextBox1.Text
+            l = InStrRev(p, "/") + 1
+            p = Mid(p, l, 11)
+            If mode = 0 Then
+                '************* mode 0
+                TextBox1.Text = "https://youtu.be/" & Mid(e.Url.OriginalString, l, 250)
+                Label1.Text = "New song"
+                OneX.Text = Chr(122) ' nav mode
+            Else
+                '************* mode 1-2 Document changed -> AfterEnd
+                If s <> p Then
+                    mode = 0
+                    Form1.Set_WebStat(mode + 2)
+                    WBros.Navigate("about:blank")
+                End If
+            End If
+        End If
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        '        'oooooooooooooooooooooooooo WEB TIMER ooooooooooooooooooooooooooooooooooooooooooo
+        Label2.Text = TimeString
+        If Asc(OneX.Text) = 129 Then
+            If rcnt > 0 Then
+                If rcnt = 1 Then
+                    Form1.Set_WebStat(mode + 2)
+                    WBros.Navigate("about:blank")
+                End If
+                rcnt = rcnt - 1
+            End If
+        End If
+    End Sub
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' WEB FORM LOAD
         Opacity = Form1.Opacity
@@ -19,19 +59,22 @@
     End Sub
     Private Sub Station_Click(sender As Object, e As EventArgs) Handles Station.Click
         '*** RÁDIÓ ÁLLOMÁS ***
+        Dim s As String
         SetMode0()
         If TextBox1.Text = Radio.Text Then
             TextBox1.Text = "https://www.auckland80s.com/auckland-80s.html"
-            Label1.Text = "Auckland 80's radio"
+            s = "Auckland 80's radio"
         Else
             TextBox1.Text = Radio.Text
-            Label1.Text = "Web Radio"
+            s = "Web Radio"
         End If
         Navi_Click(sender, e)
+        Label1.Text = s
     End Sub
     Private Sub Navi_Click(sender As Object, e As EventArgs) Handles Navi.Click
+        SetMode0()
         WBros.Navigate(TextBox1.Text)
-        Label1.Text = Mid(TextBox1.Text, 13, 32)
+        Label1.Text = "Navigate"
     End Sub
     Private Sub HomeButton_Click(sender As Object, e As EventArgs) Handles HomeButton.Click
         SetMode0()
@@ -64,45 +107,6 @@
         SetMode0()
         WBros.Refresh()
     End Sub
-    Private Sub WBros_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WBros.DocumentCompleted
-        Dim s As String
-        Dim p As String
-        Dim l As Integer
-        If e.Url.LocalPath = "/watch" Then
-            s = e.Url.OriginalString
-            l = InStr(s, "?v=") + 3
-            s = Mid(s, l, 11)
-            '<><><><> Document same as?
-            p = TextBox1.Text
-            l = InStrRev(p, "/") + 1
-            p = Mid(p, l, 11)
-            If mode = 0 Then
-                '************* mode 0
-                TextBox1.Text = "https://youtu.be/" & Mid(e.Url.OriginalString, l, 250)
-                OneX.Text = Chr(122) ' nav mode
-            Else
-                '************* mode 1-2 Document changed -> AfterEnd
-                If s <> p Then
-                    mode = 0
-                    Form1.Set_WebStat(mode + 2)
-                    WBros.Navigate("about:blank")
-                End If
-            End If
-        End If
-    End Sub
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        '        'oooooooooooooooooooooooooo WEB TIMER ooooooooooooooooooooooooooooooooooooooooooo
-        If Asc(OneX.Text) = 129 Then
-            Label1.Text = mode & " " & rcnt
-            If rcnt > 0 Then
-                If rcnt = 1 Then
-                    Form1.Set_WebStat(mode + 2)
-                    WBros.Navigate("about:blank")
-                End If
-                rcnt = rcnt - 1
-            End If
-        End If
-    End Sub
     Private Sub Form2_ClientSizeChanged(sender As Object, e As EventArgs) Handles MyBase.ClientSizeChanged
         WBros.Width = ClientSize.Width - 46
         WBros.Height = ClientSize.Height - 60
@@ -125,7 +129,7 @@
     End Sub
     Sub SetMode0()
         mode = 0
-        OneX.Text = 122
+        OneX.Text = chr(122)
         Form1.StopMCI(1)
         Form1.StopMCI(2)
     End Sub

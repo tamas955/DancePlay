@@ -127,8 +127,8 @@
             End If
         Else
             'Web megy
-            If Webstat = 3 Then Stop : PlayNext(True, True)
-            If Webstat = 4 Then PlayNext(False, True)
+            If Webstat = 3 Then Webstat = 0 : PlayNext(True, True)
+            If Webstat = 4 Then Webstat = 0 : PlayNext(False, True)
         End If
     End Sub
     Sub AfterEnd(A As Boolean) '<=============== END POINT ==================>
@@ -184,9 +184,10 @@
                     Else
                         'TIPTXT1 WEB
                         Webstat = 1
-                        Form2.SetRcnt(1, 50)
+                        Form2.SetRcnt(1, 10)
                         Text = s
-                        NowTxt1.Text = BoxTxt1.Text
+                        NowTxt1.Text = Mid(Box1.Text, 11)
+                        Form2.Label1.Text = "♪" & Mid(Box1.Text, 11)
                         Form2.TextBox1.Text = s
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♪ Web ♪"
@@ -222,7 +223,8 @@
                         Webstat = 2
                         Form2.SetRcnt(1, 20)
                         Text = s
-                        NowTxt2.Text = BoxTxt2.Text
+                        NowTxt2.Text = Mid(Box2.Text, 11)
+                        Form2.Label1.Text = "♫ " & Mid(Box2.Text, 11)
                         Form2.TextBox1.Text = s
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♫ Web ♫"
