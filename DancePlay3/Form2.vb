@@ -120,11 +120,13 @@
         Opacity = X / 100
     End Sub
     Private Sub AddList1_Click(sender As Object, e As EventArgs) Handles AddList1.Click
-        ' Form1.ListBox1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
-        'Form1.ListBox3.Items.Add(TextBox1.Text)
+        Form1.Box1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
+        Form1.Box11.Items.Add(TextBox1.Text)
         Label1.Text = "Added to PlayList ♪"
     End Sub
     Private Sub AddList2_Click(sender As Object, e As EventArgs) Handles AddList2.Click
+        Form1.Box2.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
+        Form1.Box22.Items.Add(TextBox1.Text)
         Label1.Text = "Added to PlayList ♫"
     End Sub
     Sub SetMode0()

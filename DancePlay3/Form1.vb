@@ -221,7 +221,7 @@
                     Else
                         'TIPTXT2 WEB
                         Webstat = 2
-                        Form2.SetRcnt(1, 20)
+                        Form2.SetRcnt(2, 20)
                         Text = s
                         NowTxt2.Text = Mid(Box2.Text, 11)
                         Form2.Label1.Text = "♫ " & Mid(Box2.Text, 11)
