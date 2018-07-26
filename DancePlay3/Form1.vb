@@ -259,27 +259,37 @@
     End Sub
     Sub StopMCI(Cm As Short)
         Dim Rv As Integer = 0
-        If Cm = 1 Then
-            Poz1.ForeColor = System.Drawing.Color.Black
-            NowTxt1.Text = "Dance Player"
-            TimTxt1.Text = "00:00:00"
-            Rv = mciSendString("stop asong", 0, 0, 0)
-            Rv = mciSendString("close asong", 0, 0, 0)
-            NowTime.Text = " ♪ ♪ ♪ ♪ ♪"
-            Pict1.Image = My.Resources.Arm00
+        If Webstat = 0 Then
+            If Cm = 1 Then
+                Poz1.ForeColor = System.Drawing.Color.Black
+                NowTxt1.Text = "Dance Player"
+                TimTxt1.Text = "00:00:00"
+                Rv = mciSendString("stop asong", 0, 0, 0)
+                Rv = mciSendString("close asong", 0, 0, 0)
+                NowTime.Text = " ♪ ♪ ♪ ♪ ♪"
+                Pict1.Image = My.Resources.Arm00
+            End If
+            If Cm = 2 Then
+                Poz2.ForeColor = System.Drawing.Color.Black
+                NowTxt2.Text = "Dance Player"
+                TimTxt2.Text = "00:00:00"
+                Rv = mciSendString("stop bsong", 0, 0, 0)
+                Rv = mciSendString("close bsong", 0, 0, 0)
+                NowTime.Text = " ♫ ♫ ♫ ♫"
+                Pict2.Image = My.Resources.Arm00
+            End If
+            BckTime.ForeColor = System.Drawing.Color.Aqua
+            BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
+            Cnt = 0
+        Else
+            'Web Stop from player
+            If (Webstat = 1) And (Cm = 1) Then
+                Form2.SetRcnt(0, 0)
+            End If
+            If (Webstat = 2) And (Cm = 2) Then
+                Form2.SetRcnt(0, 0)
+            End If
         End If
-        If Cm = 2 Then
-            Poz2.ForeColor = System.Drawing.Color.Black
-            NowTxt2.Text = "Dance Player"
-            TimTxt2.Text = "00:00:00"
-            Rv = mciSendString("stop bsong", 0, 0, 0)
-            Rv = mciSendString("close bsong", 0, 0, 0)
-            NowTime.Text = " ♫ ♫ ♫ ♫"
-            Pict2.Image = My.Resources.Arm00
-        End If
-        BckTime.ForeColor = System.Drawing.Color.Aqua
-        BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
-        Cnt = 0
     End Sub
     Private Sub Form1_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
         Dim x As Integer = 1000 * e.X / Width

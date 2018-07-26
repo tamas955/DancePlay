@@ -129,15 +129,18 @@
         Form1.Box22.Items.Add(TextBox1.Text)
         Label1.Text = "Added to PlayList ♫"
     End Sub
-    Sub SetMode0()
+    Sub SetMode0() ' CHANGE LOCAL STAT
         mode = 0
-        OneX.Text = chr(122)
+        OneX.Text = Chr(122)
         Form1.StopMCI(1)
         Form1.StopMCI(2)
     End Sub
-    Sub SetRcnt(A As Short, t As Long)
+    Sub SetRcnt(A As Short, t As Long) ' CALL FROM PLAYER
         mode = A
         rcnt = t ' **** set timeout ****
         OneX.Text = Chr(129)
+        If A * t = 0 Then
+            WBros.Navigate("about:blank")
+        End If
     End Sub
 End Class
