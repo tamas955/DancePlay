@@ -5,6 +5,18 @@
         Dim s As String
         Dim p As String
         Dim l As Integer
+        Dim Host1 As String = e.Url.DnsSafeHost
+
+        If Mid(TextBox1.Text, 1, 13) = "https://youtu" Then ' youtube only & mode0 only
+            If mode > 0 Then
+                '*** ignore other all ***
+                If (Host1 <> "www.youtube.com") And (Trim(Host1) <> "") Then
+                    WBros.Refresh()
+                    ' Label1.Text = Mid(Host1, 1, 30) 'ignored host
+                End If
+            End If
+        End If
+
         If e.Url.LocalPath = "/watch" Then
             s = e.Url.OriginalString
             l = InStr(s, "?v=") + 3
@@ -30,7 +42,7 @@
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         '        'oooooooooooooooooooooooooo WEB TIMER ooooooooooooooooooooooooooooooooooooooooooo
-        Label2.Text = TimeString
+
         If Asc(OneX.Text) = 129 Then
             If rcnt > 0 Then
                 If rcnt = 1 Then
@@ -39,6 +51,9 @@
                 End If
                 rcnt = rcnt - 1
             End If
+            Label2.Text = rcnt & Chr(34)
+        Else
+            Label2.Text = TimeString
         End If
     End Sub
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -119,11 +134,13 @@
     Private Sub AddList1_Click(sender As Object, e As EventArgs) Handles AddList1.Click
         Form1.Box1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
         Form1.Box11.Items.Add(TextBox1.Text)
+        Form1.Box1.SetSelected(Form1.Box1.Items.Count - 1, True)
         Label1.Text = "Added to PlayList ♪"
     End Sub
     Private Sub AddList2_Click(sender As Object, e As EventArgs) Handles AddList2.Click
         Form1.Box2.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
         Form1.Box22.Items.Add(TextBox1.Text)
+        Form1.Box2.SetSelected(Form1.Box2.Items.Count - 1, True)
         Label1.Text = "Added to PlayList ♫"
     End Sub
     Sub SetMode0() ' CHANGE LOCAL STAT
