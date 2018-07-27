@@ -587,7 +587,7 @@
                                 t = t + 60 * (Mid(Sz, 4, 2))
                                 t = t + (Mid(Sz, 7, 2))
                             End If
-                            file.WriteLine("#EXTINF:" & t & "," & Mid(Sz, 10, Len(Sz)))
+                            file.WriteLine("#EXTINF:" & t & "," & Trim(Mid(Sz, 10, Len(Sz))))
                             file.WriteLine(Box11.Items(i))
                         Next
                         file.Close()
@@ -612,7 +612,7 @@
                                 t = t + 60 * (Mid(Sz, 4, 2))
                                 t = t + (Mid(Sz, 7, 2))
                             End If
-                            file.WriteLine("#EXTINF:" & t & "," & Mid(Sz, 10, Len(Sz)))
+                            file.WriteLine("#EXTINF:" & t & "," & Trim(Mid(Sz, 10, Len(Sz))))
                             file.WriteLine(Box22.Items(i))
                         Next
                         file.Close()
@@ -955,7 +955,6 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
             Case Keys.L
                 Lst1_Click(sender, e)
         End Select
-
     End Sub
     Private Sub Box2_KeyDown(sender As Object, e As KeyEventArgs) Handles Box2.KeyDown
         Box1_KeyDown(sender, e)
@@ -978,7 +977,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                         Sz = Mid(Sz, 9, Len(Sz)) '#EXTINF
                         l = InStr(Sz, ",") - 1
                         t = Mid(Sz, 1, l) '------- seconds ( web -1)
-                        Sz = Mid(Sz, l + 2, Len(Sz))
+                        Sz = Trim(Mid(Sz, l + 2, Len(Sz)))
                         Box2.Items.Add(Szhms(t) & " " & Sz)
                     Else
                         '\\\\\\\\\\\\\\\\\\\\\\
@@ -1004,7 +1003,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                             l = InStr(Sz, ",") - 1
                             t = Mid(Sz, 1, l) '------- seconds
                         End If
-                        Sz = Mid(Sz, l + 2, Len(Sz))
+                        Sz = Trim(Mid(Sz, l + 2, Len(Sz)))
                         Box1.Items.Add(Szhms(t) & " " & Sz)
                     Else
                         '\\\\\\\\\\\\\\\\\\\\\\ path/link sor
@@ -1436,7 +1435,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                     t = t + 60 * (Mid(Sz, 4, 2))
                     t = t + (Mid(Sz, 7, 2))
                 End If
-                file.WriteLine("#EXTINF:" & t & "," & Mid(Sz, 10, Len(Sz)))
+                file.WriteLine("#EXTINF:" & t & "," & Trim(Mid(Sz, 10, Len(Sz))))
                 file.WriteLine(Box11.Items(i))
             Next
             file.Close()
@@ -1453,7 +1452,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                     t = t + 60 * (Mid(Sz, 4, 2))
                     t = t + (Mid(Sz, 7, 2))
                 End If
-                file.WriteLine("#EXTINF:" & t & "," & Mid(Sz, 10, Len(Sz)))
+                file.WriteLine("#EXTINF:" & t & "," & Trim(Mid(Sz, 10, Len(Sz))))
                 file.WriteLine(Box22.Items(i))
             Next
             file.Close()

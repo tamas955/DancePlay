@@ -27,6 +27,7 @@
             p = Mid(p, l, 11)
             If mode = 0 Then
                 '************* mode 0
+                Stop
                 If InStr(TextBox1.Text, "youtu.be") Then
                     Label1.Text = "Latest song"
                 Else
@@ -137,16 +138,20 @@
         Opacity = X / 100
     End Sub
     Private Sub AddList1_Click(sender As Object, e As EventArgs) Handles AddList1.Click
-        Form1.Box1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
-        Form1.Box11.Items.Add(TextBox1.Text)
-        Form1.Box1.SetSelected(Form1.Box1.Items.Count - 1, True)
-        Label1.Text = "Added to PlayList ♪"
+        If mode = 0 Then
+            Form1.Box1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
+            Form1.Box11.Items.Add(TextBox1.Text)
+            Label1.Text = "Added to PlayList ♪"
+            Form1.Box1.SetSelected(Form1.Box1.Items.Count - 1, True)
+        End If
     End Sub
     Private Sub AddList2_Click(sender As Object, e As EventArgs) Handles AddList2.Click
-        Form1.Box2.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
-        Form1.Box22.Items.Add(TextBox1.Text)
-        Form1.Box2.SetSelected(Form1.Box2.Items.Count - 1, True)
-        Label1.Text = "Added to PlayList ♫"
+        If mode = 0 Then
+            Form1.Box2.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
+            Form1.Box22.Items.Add(TextBox1.Text)
+            Label1.Text = "Added to PlayList ♫"
+            Form1.Box2.SetSelected(Form1.Box2.Items.Count - 1, True)
+        End If
     End Sub
     Sub SetMode0() ' CHANGE LOCAL STAT
         mode = 0
