@@ -90,9 +90,8 @@
 
             If Pict0.Visible = False Then
                 If Cnt > 0 Then
-                    If Paso.TabStop Then
-                        BckTime.Text = "'Paso'"
-
+                    If Paso.TabStop And Pict0.TabStop Then
+                        BckTime.Text = "Paso"
                     Else
                         BckTime.Text = Mid(Szhms(Cnt), 4, 5)
                         Cnt = Cnt - 1
@@ -101,7 +100,6 @@
                         If (Cnt < 6) And (Paso.TabStop = False) Then
                             Volreg(Art, (100 - VolCtrl1.Value) / (7 - Cnt))
                         End If
-
                     End If
                     If (Pict0.TabStop = False) And (Bell.TabStop = False) Then
                         If (Cnt / 10) = Int(Cnt / 10) Then
@@ -143,6 +141,8 @@
                         If (Webstat = 1) Or (Webstat = 3) Then AfterEnd(True)
                         If (Webstat = 2) Or (Webstat = 4) Then AfterEnd(False)
                     End If
+                Else
+                    BckTime.Text = "Paso"
                 End If
             End If
         End If
@@ -308,9 +308,13 @@
                 NowTime.Text = " ♫ ♫ ♫ ♫"
                 Pict2.Image = My.Resources.Arm00
             End If
-            BckTime.ForeColor = System.Drawing.Color.Aqua
+        BckTime.ForeColor = System.Drawing.Color.Aqua
+        If Paso.TabStop Then
+            BckTime.Text = "Paso"
+        Else
             BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
-            Cnt = 0
+        End If
+        Cnt = 0
     End Sub
     Private Sub Form1_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
         Dim x As Integer = 1000 * e.X / Width
@@ -1391,7 +1395,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         If Paso.TabStop = False Then
             Paso.TabStop = True
             Paso.Image = DancePlay3.My.Resources.Matador
-            BckTime.Text = "'Paso'"
+            BckTime.Text = "Paso"
         Else
             Paso.TabStop = False
             Paso.Image = DancePlay3.My.Resources.Brake

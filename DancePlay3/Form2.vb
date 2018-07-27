@@ -21,8 +21,8 @@
             Else
                 '************* mode 1-2 Document changed -> AfterEnd
                 If s <> p Then
-                    mode = 0
                     Form1.Set_WebStat(mode + 2)
+                    mode = 0
                     WBros.Navigate("about:blank")
                 End If
             End If
