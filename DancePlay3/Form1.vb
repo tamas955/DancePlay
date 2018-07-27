@@ -90,8 +90,13 @@
 
             If Pict0.Visible = False Then
                 If Cnt > 0 Then
-                    BckTime.Text = Mid(Szhms(Cnt), 4, 5)
-                    Cnt = Cnt - 1
+                    If Paso.TabStop Then
+                        BckTime.Text = "'Paso'"
+
+                    Else
+                        BckTime.Text = Mid(Szhms(Cnt), 4, 5)
+                        Cnt = Cnt - 1
+                    End If
                     If Pict0.TabStop Then
                         If (Cnt < 6) And (Paso.TabStop = False) Then
                             Volreg(Art, (100 - VolCtrl1.Value) / (7 - Cnt))
