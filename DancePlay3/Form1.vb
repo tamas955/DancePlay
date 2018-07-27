@@ -207,7 +207,7 @@
                     Else
                         'TIPTXT1 WEB
                         Webstat = 1
-                        Form2.SetRcnt(1, 500) ' BIZTONSÁGI IDŐ 
+                        Form2.SetRcnt(1, 500) ' BIZTONSÁGI IDŐ 8,33 '
                         Cnt = BackCtrl.Value
                         Text = s
                         NowTxt1.Text = Mid(Box1.Text, 11)
@@ -245,7 +245,7 @@
                     Else
                         'TIPTXT2 WEB
                         Webstat = 2
-                        Form2.SetRcnt(2, 500) ' BIZTONSÁGI IDŐ 
+                        Form2.SetRcnt(2, 500) ' BIZTONSÁGI IDŐ 8,33 '
                         Cnt = BackCtrl.Value
                         Text = s
                         NowTxt2.Text = Mid(Box2.Text, 11)
@@ -1068,6 +1068,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         Dim Ori As String
         If A Then
             If Box1.SelectedIndex > -1 Then
+                Edit1.Text = Trim(Edit1.Text)
                 If Edit1.Text <> "" Then
                     Ori = Mid(Box1.Items(Box1.SelectedIndex), 1, 9)
                     Box1.Items(Box1.SelectedIndex) = Ori & Edit1.Text
@@ -1078,6 +1079,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
             Box1.Select()
         Else
             If Box2.SelectedIndex > -1 Then
+                Edit2.Text = Trim(Edit2.Text)
                 If Edit2.Text <> "" Then
                     Ori = Mid(Box2.Items(Box2.SelectedIndex), 1, 9)
                     Box2.Items(Box2.SelectedIndex) = Ori & Edit2.Text
@@ -1387,9 +1389,6 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         Paso.TabStop = False
         Paso.Image = DancePlay3.My.Resources.Brake
         BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
-    End Sub
-    Private Sub WaitCtrl_ValueChanged(sender As Object, e As EventArgs) Handles WaitCtrl.ValueChanged
-        ' :)
     End Sub
     Private Sub Paso_Click(sender As Object, e As EventArgs) Handles Paso.Click
         If Paso.TabStop = False Then

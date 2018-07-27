@@ -27,9 +27,13 @@
             p = Mid(p, l, 11)
             If mode = 0 Then
                 '************* mode 0
-                TextBox1.Text = "https://youtu.be/" & Mid(e.Url.OriginalString, l, 250)
-                Label1.Text = "New song"
-                OneX.Text = Chr(122) ' nav mode
+                If InStr(TextBox1.Text, "youtu.be") Then
+                    Label1.Text = "Latest song"
+                Else
+                    TextBox1.Text = "https://youtu.be/" & Mid(e.Url.OriginalString, l, 250)
+                    Label1.Text = "New song"
+                    OneX.Text = Chr(122) ' nav mode
+                End If
             Else
                 '************* mode 1-2 Document changed -> AfterEnd
                 If s <> p Then
@@ -42,11 +46,11 @@
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         '        'oooooooooooooooooooooooooo WEB TIMER ooooooooooooooooooooooooooooooooooooooooooo
-
         If Asc(OneX.Text) = 129 Then
             If rcnt > 0 Then
                 If rcnt = 1 Then
                     Form1.Set_WebStat(mode + 2)
+                    mode = 0
                     WBros.Navigate("about:blank")
                 End If
                 rcnt = rcnt - 1
@@ -86,7 +90,7 @@
     Private Sub Navi_Click(sender As Object, e As EventArgs) Handles Navi.Click
         SetMode0()
         WBros.Navigate(TextBox1.Text)
-        Label1.Text = "Navigate"
+        Label1.Text = "Navigate..."
     End Sub
     Private Sub HomeButton_Click(sender As Object, e As EventArgs) Handles HomeButton.Click
         SetMode0()
@@ -98,10 +102,12 @@
     Private Sub BackwardButton_Click(sender As Object, e As EventArgs) Handles BackwardButton.Click
         SetMode0()
         WBros.GoBack()
+        Label1.Text = ""
     End Sub
     Private Sub ForwardButton_Click(sender As Object, e As EventArgs) Handles ForwardButton.Click
         SetMode0()
         WBros.GoForward()
+        Label1.Text = ""
     End Sub
     Private Sub NavStop_Click(sender As Object, e As EventArgs) Handles NavStop.Click
         SetMode0()
@@ -116,7 +122,6 @@
         End If
     End Sub
     Private Sub Fress_Click(sender As Object, e As EventArgs) Handles Fress.Click
-        SetMode0()
         WBros.Refresh()
     End Sub
     Private Sub Form2_ClientSizeChanged(sender As Object, e As EventArgs) Handles MyBase.ClientSizeChanged
