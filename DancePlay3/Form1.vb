@@ -1,5 +1,6 @@
 ﻿Public Class Form1
     Private Declare Function mciSendString Lib "winmm.dll" Alias "mciSendStringA" (ByVal lpstrCommand As String, ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCallback As Integer) As Integer
+    ' pause for 5 seconds
     Dim APdl As Boolean = False 'jelzi hogy kell-e menteni az (első) listát kilépéskor
     Dim Bpdl As Boolean = False 'u.a. B-re
     Dim ALenght As Long = 0
@@ -7,6 +8,7 @@
     Dim Cnt As Long = 0
     Dim Art As Boolean = True
     Dim Webstat As Short = 0
+    Dim PlayErr As Short = 0
     Private Sub PlyTimer_Tick(sender As Object, e As EventArgs) Handles PlyTimer.Tick
         Dim Rv As Integer = 0
         Dim Rs As String = Space(128)
@@ -202,6 +204,13 @@
                             Pict0.TabStop = True ' cnt indul
                         Else
                             Rv = mciSendString("close asong", 0, 0, 0)
+                            PlayErr = PlayErr + 1
+                            If PlayErr < 4 Then
+                                AfterEnd(True)
+                            Else
+                                PlayErr = 0
+                                StopMCI(1)
+                            End If
                             AfterEnd(True)
                         End If
                     Else
@@ -238,9 +247,16 @@
                             Volreg(False, (100 - VolCtrl1.Value))
                             Art = False
                             Pict0.TabStop = True ' cnt indul
+                            PlayErr = 0
                         Else
                             Rv = mciSendString("close bsong", 0, 0, 0)
-                            AfterEnd(False)
+                            PlayErr = PlayErr + 1
+                            If PlayErr < 4 Then
+                                AfterEnd(False)
+                            Else
+                                PlayErr = 0
+                                StopMCI(2)
+                            End If
                         End If
                     Else
                         'TIPTXT2 WEB
@@ -300,21 +316,20 @@
             Pict1.Image = My.Resources.Arm00
         End If
         If Cm = 2 Then
-                Poz2.ForeColor = System.Drawing.Color.Black
-                NowTxt2.Text = "Dance Player"
-                TimTxt2.Text = "00:00:00"
-                Rv = mciSendString("stop bsong", 0, 0, 0)
-                Rv = mciSendString("close bsong", 0, 0, 0)
-                NowTime.Text = " ♫ ♫ ♫ ♫"
-                Pict2.Image = My.Resources.Arm00
-            End If
+            Poz2.ForeColor = System.Drawing.Color.Black
+            NowTxt2.Text = "Dance Player"
+            TimTxt2.Text = "00:00:00"
+            Rv = mciSendString("stop bsong", 0, 0, 0)
+            Rv = mciSendString("close bsong", 0, 0, 0)
+            NowTime.Text = " ♫ ♫ ♫ ♫"
+            Pict2.Image = My.Resources.Arm00
+        End If
         BckTime.ForeColor = System.Drawing.Color.Aqua
         If Paso.TabStop Then
             BckTime.Text = "Paso"
         Else
             BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
         End If
-        Cnt = 0
     End Sub
     Private Sub Form1_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
         Dim x As Integer = 1000 * e.X / Width
