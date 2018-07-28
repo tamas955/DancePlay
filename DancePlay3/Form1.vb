@@ -245,7 +245,7 @@
                     Else
                         'TIPTXT2 WEB
                         Webstat = 2
-                        Form2.SetRcnt(2, 500) ' BIZTONSÁGI IDŐ 8,33 '
+                        Form2.SetRcnt(2, 500) ' BIZTONSÁGI IDŐ 8,33 ' *
                         Cnt = BackCtrl.Value
                         Text = s
                         NowTxt2.Text = Mid(Box2.Text, 11)
