@@ -202,6 +202,7 @@
                             Volreg(True, (100 - VolCtrl1.Value))
                             Art = True
                             Pict0.TabStop = True ' cnt indul
+                            PlayErr = 0                             '*** bad file 4× -> stop
                         Else
                             Rv = mciSendString("close asong", 0, 0, 0)
                             PlayErr = PlayErr + 1
