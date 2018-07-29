@@ -6,6 +6,9 @@
         Dim p As String
         Dim l As Integer
         Dim Host1 As String = e.Url.DnsSafeHost
+        Dim Orig As String = e.Url.OriginalString
+        Dim Path2 As String = e.Url.LocalPath
+
 
         If Mid(TextBox1.Text, 1, 13) = "https://youtu" Then ' youtube only & mode0 only
             If mode > 0 Then
@@ -17,8 +20,8 @@
             End If
         End If
 
-        If e.Url.LocalPath = "/watch" Then
-            s = e.Url.OriginalString
+        If Path2 = "/watch" Then
+            s = Orig
             l = InStr(s, "?v=") + 3
             s = Mid(s, l, 11)
             '<><><><> Document same as?
@@ -27,13 +30,9 @@
             p = Mid(p, l, 11)
             If mode = 0 Then
                 '************* mode 0
-                Stop
-                If InStr(TextBox1.Text, "youtu.be") Then
-                    Label1.Text = "Latest song"
-                Else
-                    TextBox1.Text = "https://youtu.be/" & Mid(e.Url.OriginalString, l, 250)
+                If (s <> p) And (Trim(s) <> "") Then
+                    TextBox1.Text = "https://youtu.be/" & s 'Mid(e.Url.OriginalString, l, 250)
                     Label1.Text = "New song"
-                    OneX.Text = Chr(122) ' nav mode
                 End If
             Else
                 '************* mode 1-2 Document changed -> AfterEnd
@@ -139,10 +138,13 @@
     End Sub
     Private Sub AddList1_Click(sender As Object, e As EventArgs) Handles AddList1.Click
         If mode = 0 Then
+            MsgBox("Web Song " & Mid(TextBox1.Text, 9) & Chr(10) & TextBox1.Text)
+            GoTo odane
             Form1.Box1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
             Form1.Box11.Items.Add(TextBox1.Text)
             Label1.Text = "Added to PlayList ♪"
             Form1.Box1.SetSelected(Form1.Box1.Items.Count - 1, True)
+odane:
         End If
     End Sub
     Private Sub AddList2_Click(sender As Object, e As EventArgs) Handles AddList2.Click
