@@ -902,6 +902,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         Dim Sz As String
         Dim l As Short
         Dim t As Long
+        PlyTimer.Enabled = False
         If (OpenFileDialog2.ShowDialog() = DialogResult.OK) Then
             If LCase(Mid(OpenFileDialog2.FileName, Len(OpenFileDialog2.FileName) - 2, 3)) = "m3u" Then
                 Fl = FreeFile()
@@ -935,6 +936,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                 file.Close()
             End If
         End If
+        PlyTimer.Enabled = True
     End Sub
     Private Sub Box1_KeyDown(sender As Object, e As KeyEventArgs) Handles Box1.KeyDown
         If Art Then
