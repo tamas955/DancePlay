@@ -1032,8 +1032,8 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
             APdl = True '****** sikerült betölteni : kilépéskor már nem kell automatikusan menteni
         End If
         '----------- URL ------------- #### INI file ####
-        If Dir("DancePlay3.url ") <> "" Then
-            file = My.Computer.FileSystem.OpenTextFileReader("DancePlay3.ini")
+        If Dir("DancePlayer.ini ") <> "" Then
+            file = My.Computer.FileSystem.OpenTextFileReader("DancePlayer.ini")
             While Not file.EndOfStream
                 Sz = file.ReadLine()
                 If LCase(Sz) = "[default]" Then

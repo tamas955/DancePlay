@@ -11,7 +11,6 @@ Public Class Form2
         Dim Orig As String = e.Url.OriginalString
         Dim Path2 As String = e.Url.LocalPath
 
-
         If Mid(TextBox1.Text, 1, 13) = "https://youtu" Then ' youtube only & mode0 only
             If mode > 0 Then
                 '*** ignore other all ***
