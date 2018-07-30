@@ -1,4 +1,6 @@
-﻿Public Class Form2
+﻿Imports System.Web.Script.Serialization
+
+Public Class Form2
     Dim rcnt As Long
     Dim mode As Short = 0
     Private Sub WBros_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WBros.DocumentCompleted
@@ -168,5 +170,14 @@ odane:
         If A * t = 0 Then
             WBros.Navigate("about:blank")
         End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim URL As String = "https://www.youtube.com/watch?v=Q-c-oj5MKgI"
+        Dim webClient As New System.Net.WebClient
+        Dim result As String = webClient.DownloadString("https://www.youtube.com/oembed?format=json&url=" + URL)
+        Dim serializer As New JavaScriptSerializer()
+        Dim dict As Dictionary(Of String, String) = serializer.Deserialize(Of Dictionary(Of String, String))(result)
+        MsgBox(dict.Item("title"))
     End Sub
 End Class

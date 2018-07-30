@@ -1044,15 +1044,16 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                     End If
                 End If
                 If LCase(Sz) = "[radio]" Then
-                        If Not file.EndOfStream Then
+                    If Not file.EndOfStream Then
                         Sz = file.ReadLine()
                         Form2.Radio.Text = Sz
-                        End If
                     End If
+                End If
 
             End While
+            file.Close() '--- URL ---
         End If
-        file.Close() '--- URL ---
+
         Text = "☼ Dance Player 3 ☼"
         Opacity = 0.92
         Poz1.ForeColor = System.Drawing.Color.Black

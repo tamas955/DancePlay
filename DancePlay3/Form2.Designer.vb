@@ -41,6 +41,7 @@ Partial Class Form2
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.AddList1 = New System.Windows.Forms.Label()
         Me.AddList2 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'WOpac
@@ -217,12 +218,22 @@ Partial Class Form2
         Me.AddList2.Text = "4"
         Me.AddList2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(898, 87)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(35, 56)
+        Me.Button1.TabIndex = 123
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(931, 545)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.AddList2)
         Me.Controls.Add(Me.AddList1)
         Me.Controls.Add(Me.Radio)
@@ -266,4 +277,5 @@ Partial Class Form2
     Friend WithEvents Timer1 As Timer
     Friend WithEvents AddList1 As Label
     Friend WithEvents AddList2 As Label
+    Friend WithEvents Button1 As Button
 End Class
