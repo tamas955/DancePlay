@@ -13,7 +13,9 @@ Public Class Form2
         'orig https://tpc.googlesyndication.com/sodar/3PnwIJ1d.html
         'host tpc.googlesyndication.com
         'path /sodar/3PnWIJ1d.html
-        If Host1 = "tpc.googlesyndication.com" Then WBros.Refresh()
+        If Host1 = "tpc.googlesyndication.com" Then
+            WBros.Refresh()
+        End If
 
         If Path2 = "/watch" Then
             s = Orig
