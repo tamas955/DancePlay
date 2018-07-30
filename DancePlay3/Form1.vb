@@ -989,7 +989,6 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                         Speed2.Value = Speed2.Value - 5
                     End If
             End Select
-            End Select
         End If
         Select Case e.KeyValue
             Case Keys.P
