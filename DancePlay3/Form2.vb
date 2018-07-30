@@ -15,8 +15,11 @@ Public Class Form2
             If mode > 0 Then
                 '*** ignore other all ***
                 If (Host1 <> "www.youtube.com") And (Trim(Host1) <> "") Then
-                    WBros.Refresh()
-                    ' Label1.Text = Mid(Host1, 1, 30) 'ignored host
+                    If LCase(Mid(Host1, 1, 8)) = "googlead" Then GoTo NoFresh
+                    If LCase(Mid(Host1, 1, 6)) = "pagead" Then GoTo NoFresh
+                    '   WBros.Refresh()
+NoFresh:
+                    Label1.Text = Mid(TimeString, 4) & Host1 'ignored host
                 End If
             End If
         End If
@@ -33,7 +36,7 @@ Public Class Form2
                 '************* mode 0
                 If (s <> p) And (Trim(s) <> "") Then
                     TextBox1.Text = "https://youtu.be/" & s 'Mid(e.Url.OriginalString, l, 250)
-                    Label1.Text = "New song"
+                    Label1.Text = Serial(TextBox1.Text)
                 End If
             Else
                 '************* mode 1-2 Document changed -> AfterEnd
@@ -170,7 +173,15 @@ odane:
             WBros.Navigate("about:blank")
         End If
     End Sub
-
+    Function Serial(URL As String) As String
+        Dim Ret As String
+        Dim webClient As New System.Net.WebClient
+        Dim result As String = webClient.DownloadString("https://www.youtube.com/oembed?format=json&url=" + URL)
+        Dim serializer As New JavaScriptSerializer()
+        Dim dict As Dictionary(Of String, String) = serializer.Deserialize(Of Dictionary(Of String, String))(result)
+        Ret = dict.Item("title")
+        Return Ret
+    End Function
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim URL As String = "https://www.youtube.com/watch?v=Q-c-oj5MKgI"
         Dim webClient As New System.Net.WebClient

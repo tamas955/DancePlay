@@ -209,7 +209,7 @@
                             If PlayErr < Box1.Items.Count Then
                                 AfterEnd(True)
                             Else
-                                PlayErr = 0
+                                PlayErr = -1
                                 StopMCI(1)
                             End If
                         End If
@@ -254,7 +254,7 @@
                             If PlayErr < Box2.Items.Count Then
                                 AfterEnd(False)
                             Else
-                                PlayErr = 0
+                                PlayErr = -1
                                 StopMCI(2)
                             End If
                         End If
@@ -1640,10 +1640,10 @@ tova:
         '######### PLAY BY INDEX ######### 
         If A Then '@@@@@@@@@@@@@@@@@@@@@@@@@ PLAY A-X @@@@@@@@@@@@@@@@@@@ A-X
             Box1.SelectedValue = X
-            PlayMCI(1)
+            If PlayErr > -1 Then PlayMCI(1) Else PlayErr = 0
         Else '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ PLAY B-X @@@@@@@@@@@@@@@@@@@ B-X
             Box2.SelectedValue = X
-            PlayMCI(2)
+            If PlayErr > -1 Then PlayMCI(2) Else PlayErr = 0
         End If
     End Sub
 
