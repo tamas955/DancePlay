@@ -430,35 +430,43 @@
         If y > 960 Then
             If x < 64 Then
                 '**** ADD A FILES ****
+                PlyTimer.Enabled = False
                 If OpenFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
                     For i As Integer = 0 To Val(OpenFileDialog1.FileNames.Length) - 1
                         AddMusicFile(True, OpenFileDialog1.FileNames(i))
                     Next
                 End If
+                PlyTimer.Enabled = True
             End If
             If (x > 509) And (x < 566) Then
                 '**** ADD B FILES ****
+                PlyTimer.Enabled = False
                 If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
                     For i As Integer = 0 To Val(OpenFileDialog1.FileNames.Length) - 1
                         AddMusicFile(False, OpenFileDialog1.FileNames(i))
                     Next
                 End If
+                PlyTimer.Enabled = True
             End If
             If (x > 70) And (x < 93) Then
                 '**** LOAD A FOLDER ****
+                PlyTimer.Enabled = False
                 If (FolderOpen.ShowDialog() = DialogResult.OK) Then
                     For Each foundFile As String In My.Computer.FileSystem.GetFiles(FolderOpen.SelectedPath)
                         AddMusicFile(True, foundFile)
                     Next
                 End If
+                PlyTimer.Enabled = True
             End If
             If (x > 566) And (x < 594) Then
                 '**** LOAD B FOLDER ****
+                PlyTimer.Enabled = False
                 If (FolderOpen.ShowDialog() = DialogResult.OK) Then
                     For Each foundFile As String In My.Computer.FileSystem.GetFiles(FolderOpen.SelectedPath)
                         AddMusicFile(False, foundFile)
                     Next
                 End If
+                PlyTimer.Enabled = True
             End If
             If (x > 106) And (x < 152) Then ' *-*-*-*-*-*-*-*-*-*- LISTBOX SOURCE *-*-*-*-*-*-*---
                 'del1 one song
@@ -578,17 +586,22 @@
             End If
             If (x > 392) And (x < 435) Then
                 '**** LOAD A PLAYLIST ****
+                PlyTimer.Enabled = False
                 ListLoad(True)
+                PlyTimer.Enabled = True
             End If
             If (x > 883) And (x < 935) Then
                 '**** LOAD B PLAYLIST ****
+                PlyTimer.Enabled = False
                 ListLoad(False)
+                PlyTimer.Enabled = True
             End If
             If (x > 441) And (x < 483) Then
                 'save1
                 Dim file As System.IO.StreamWriter
                 Dim Sz As String = ""
                 Dim t As Long
+                PlyTimer.Enabled = False
                 If Box1.Items.Count > 0 Then
                     If SaveFileDialog1.ShowDialog() = 1 Then
                         file = My.Computer.FileSystem.OpenTextFileWriter(SaveFileDialog1.FileName, False)
@@ -608,12 +621,14 @@
                         file.Close()
                     End If
                 End If
+                PlyTimer.Enabled = True
             End If
             If x > 933 Then
                 'save2
                 Dim file As System.IO.StreamWriter
                 Dim Sz As String
                 Dim t As Long
+                PlyTimer.Enabled = False
                 If Box2.Items.Count > 0 Then
                     If SaveFileDialog1.ShowDialog() = 1 Then
                         file = My.Computer.FileSystem.OpenTextFileWriter(SaveFileDialog1.FileName, False)
@@ -633,8 +648,11 @@
                         file.Close()
                     End If
                 End If
+                PlyTimer.Enabled = True
             End If
         End If
+
+        '-------------------------------------------------------------------------------
         If (x > 405) And (x < 586) And (y < 100) Then ' # # # # ||||| OPACITY -----
             Opacity = 1 - ((x - 420) / 165) + 0.15
         End If
