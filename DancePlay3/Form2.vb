@@ -7,22 +7,13 @@ Public Class Form2
         Dim s As String
         Dim p As String
         Dim l As Integer
-        Dim Host1 As String = e.Url.DnsSafeHost
         Dim Orig As String = e.Url.OriginalString
+        Dim Host1 As String = e.Url.DnsSafeHost
         Dim Path2 As String = e.Url.LocalPath
-
-        If Mid(TextBox1.Text, 1, 13) = "https://youtu" Then ' youtube only & mode0 only
-            If mode > 0 Then
-                '*** ignore other all ***
-                If (Host1 <> "www.youtube.com") And (Trim(Host1) <> "") Then
-                    If LCase(Mid(Host1, 1, 8)) = "googlead" Then GoTo NoFresh
-                    If LCase(Mid(Host1, 1, 6)) = "pagead" Then GoTo NoFresh
-                    '   WBros.Refresh()
-NoFresh:
-                    Label1.Text = Mid(TimeString, 4) & Host1 'ignored host
-                End If
-            End If
-        End If
+        'orig https://tpc.googlesyndication.com/sodar/3PnwIJ1d.html
+        'host tpc.googlesyndication.com
+        'path /sodar/3PnWIJ1d.html
+        If Host1 = "tpc.googlesyndication.com" Then WBros.Refresh()
 
         If Path2 = "/watch" Then
             s = Orig
@@ -142,7 +133,7 @@ NoFresh:
     End Sub
     Private Sub AddList1_Click(sender As Object, e As EventArgs) Handles AddList1.Click
         If mode = 0 Then
-            If Mid(Label1.Text, 1, 17) <> "Added to PlayList" Then
+            If (Mid(Label1.Text, 1, 17) <> "Added to PlayList") And (Label1.Text <> "Navigate...") And (Label1.Text <> "") Then
                 Form1.Box1.Items.Add("Web Song " & Label1.Text)
                 Form1.Box11.Items.Add(TextBox1.Text)
                 Label1.Text = "Added to PlayList ♪"
@@ -183,5 +174,6 @@ NoFresh:
         Ret = dict.Item("title")
         Return Ret
     End Function
+
 
 End Class
