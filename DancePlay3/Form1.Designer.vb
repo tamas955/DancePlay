@@ -141,7 +141,7 @@ Partial Class Form1
         Me.BoxTxt1.Size = New System.Drawing.Size(288, 20)
         Me.BoxTxt1.TabIndex = 5
         Me.BoxTxt1.TabStop = False
-        Me.BoxTxt1.Text = "BoxText1"
+        Me.BoxTxt1.Text = "Select song"
         '
         'TipTxt1
         '
@@ -167,7 +167,7 @@ Partial Class Form1
         Me.BoxTxt2.Size = New System.Drawing.Size(300, 20)
         Me.BoxTxt2.TabIndex = 7
         Me.BoxTxt2.TabStop = False
-        Me.BoxTxt2.Text = "BoxText2"
+        Me.BoxTxt2.Text = "Select Song"
         '
         'TipTxt2
         '

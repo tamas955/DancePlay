@@ -206,13 +206,12 @@
                         Else
                             Rv = mciSendString("close asong", 0, 0, 0)
                             PlayErr = PlayErr + 1
-                            If PlayErr < 4 Then
+                            If PlayErr < Box1.Items.Count Then
                                 AfterEnd(True)
                             Else
                                 PlayErr = 0
                                 StopMCI(1)
                             End If
-                            AfterEnd(True)
                         End If
                     Else
                         'TIPTXT1 WEB
@@ -252,7 +251,7 @@
                         Else
                             Rv = mciSendString("close bsong", 0, 0, 0)
                             PlayErr = PlayErr + 1
-                            If PlayErr < 4 Then
+                            If PlayErr < Box2.Items.Count Then
                                 AfterEnd(False)
                             Else
                                 PlayErr = 0
@@ -985,7 +984,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         Dims()
         '**** when form loading ************* INITIALIZE =============================== 
         If Dir("B.m3u") <> "" Then
-            file = My.Computer.FileSystem.OpenTextFileReader("B.m3u")
+            file = My.Computer.FileSystem.OpenTextFileReader("B.m3u") '******** B !!! ********
             While Not file.EndOfStream
                 Sz = file.ReadLine()
                 If Sz <> "#EXTM3U" Then
@@ -1005,7 +1004,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
             Box2.Select()
             file.Close()
             Bpdl = True '****** sikerült betölteni : kilépéskor már nem kell automatikusan menteni
-        End If
+        End If ' Dir B.m3u
         If Dir("A.m3u") <> "" Then
             file = My.Computer.FileSystem.OpenTextFileReader("A.m3u")
             While Not file.EndOfStream
@@ -1032,9 +1031,9 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
             file.Close()
             APdl = True '****** sikerült betölteni : kilépéskor már nem kell automatikusan menteni
         End If
-        '----------- URL -------------
+        '----------- URL ------------- #### INI file ####
         If Dir("DancePlay3.url ") <> "" Then
-            file = My.Computer.FileSystem.OpenTextFileReader("DancePlay3.url")
+            file = My.Computer.FileSystem.OpenTextFileReader("DancePlay3.ini")
             While Not file.EndOfStream
                 Sz = file.ReadLine()
                 If LCase(Sz) = "[default]" Then
@@ -1049,12 +1048,11 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                         Form2.Radio.Text = Sz
                     End If
                 End If
-
             End While
             file.Close() '--- URL ---
         End If
-
-        Text = "☼ Dance Player 3 ☼"
+        '###### OTHER INITS #####
+        Text = "♪ Dance Player ♫"
         Opacity = 0.92
         Poz1.ForeColor = System.Drawing.Color.Black
         Poz2.ForeColor = System.Drawing.Color.Black
