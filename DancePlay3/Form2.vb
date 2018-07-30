@@ -142,21 +142,22 @@ NoFresh:
     End Sub
     Private Sub AddList1_Click(sender As Object, e As EventArgs) Handles AddList1.Click
         If mode = 0 Then
-            MsgBox("Web Song " & Mid(TextBox1.Text, 9) & Chr(10) & TextBox1.Text)
-            GoTo odane
-            Form1.Box1.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
-            Form1.Box11.Items.Add(TextBox1.Text)
-            Label1.Text = "Added to PlayList ♪"
-            Form1.Box1.SetSelected(Form1.Box1.Items.Count - 1, True)
-odane:
+            If Mid(Label1.Text, 1, 17) <> "Added to PlayList" Then
+                Form1.Box1.Items.Add("Web Song " & Label1.Text)
+                Form1.Box11.Items.Add(TextBox1.Text)
+                Label1.Text = "Added to PlayList ♪"
+                Form1.Box1.SetSelected(Form1.Box1.Items.Count - 1, True)
+            End If
         End If
     End Sub
     Private Sub AddList2_Click(sender As Object, e As EventArgs) Handles AddList2.Click
         If mode = 0 Then
-            Form1.Box2.Items.Add("Web Song " & Mid(TextBox1.Text, 9))
-            Form1.Box22.Items.Add(TextBox1.Text)
-            Label1.Text = "Added to PlayList ♫"
-            Form1.Box2.SetSelected(Form1.Box2.Items.Count - 1, True)
+            If Mid(Label1.Text, 1, 17) <> "Added to PlayList" Then
+                Form1.Box2.Items.Add("Web Song " & Label1.Text)
+                Form1.Box22.Items.Add(TextBox1.Text)
+                Label1.Text = "Added to PlayList ♪"
+                Form1.Box2.SetSelected(Form1.Box2.Items.Count - 1, True)
+            End If
         End If
     End Sub
     Sub SetMode0() ' CHANGE LOCAL STAT
@@ -182,12 +183,5 @@ odane:
         Ret = dict.Item("title")
         Return Ret
     End Function
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim URL As String = "https://www.youtube.com/watch?v=Q-c-oj5MKgI"
-        Dim webClient As New System.Net.WebClient
-        Dim result As String = webClient.DownloadString("https://www.youtube.com/oembed?format=json&url=" + URL)
-        Dim serializer As New JavaScriptSerializer()
-        Dim dict As Dictionary(Of String, String) = serializer.Deserialize(Of Dictionary(Of String, String))(result)
-        MsgBox(dict.Item("title"))
-    End Sub
+
 End Class
