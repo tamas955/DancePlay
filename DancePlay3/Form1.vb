@@ -955,6 +955,14 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                     PlayMCI(1)
                 Case Keys.Enter
                     PlayMCI(1)
+                Case Keys.Add
+                    If Speed1.Value < 150 Then
+                        Speed1.Value = Speed1.Value + 5
+                    End If
+                Case Keys.Subtract
+                    If Speed1.Value > 50 Then
+                        Speed1.Value = Speed1.Value - 5
+                    End If
             End Select
         Else
             Select Case e.KeyValue
@@ -972,6 +980,15 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
                     PlayMCI(2)
                 Case Keys.Enter
                     PlayMCI(2)
+                Case Keys.Add
+                    If Speed2.Value < 150 Then
+                        Speed2.Value = Speed2.Value + 5
+                    End If
+                Case Keys.Subtract
+                    If Speed2.Value > 50 Then
+                        Speed2.Value = Speed2.Value - 5
+                    End If
+            End Select
             End Select
         End If
         Select Case e.KeyValue
