@@ -9,6 +9,7 @@
     Dim Art As Boolean = True
     Dim Webstat As Short = 0
     Dim PlayErr As Short = 0
+    Dim vze As Boolean = False
     Private Sub PlyTimer_Tick(sender As Object, e As EventArgs) Handles PlyTimer.Tick
         Dim Rv As Integer = 0
         Dim Rs As String = Space(128)
@@ -91,12 +92,14 @@
             End If  '=============================================================================================
 
             If Pict0.Visible = False Then
-                If Cnt > 0 Then
-                    If Paso.TabStop And Pict0.TabStop Then
-                        BckTime.Text = "Paso"
-                    Else
-                        BckTime.Text = Mid(Szhms(Cnt), 4, 5)
-                        Cnt = Cnt - 1
+                If (Cnt > 0) Then
+                    If vze Then
+                        If Paso.TabStop And Pict0.TabStop Then
+                            BckTime.Text = "Paso"
+                        Else
+                            BckTime.Text = Mid(Szhms(Cnt), 4, 5)
+                            Cnt = Cnt + vze
+                        End If
                     End If
                     If Pict0.TabStop Then
                         If (Cnt < 6) And (Paso.TabStop = False) Then
@@ -126,19 +129,25 @@
                         Rv = mciSendString("stop bell", 0, 0, 0)
                         Rv = mciSendString("close bell", 0, 0, 0)
                         BckTime.ForeColor = System.Drawing.Color.Aqua
+                        If Paso.TabStop Then
+                            BckTime.Text = "Paso"
+                        Else
+                            BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
+                            '  Pict0.TabStop = False
+                        End If
                         PlayNext(Art, True)
                     End If
                 End If
             End If
         Else
-            'Web megy
+            'Web megy -----------------------------------------'WEB 
             If Webstat = 3 Then AfterEnd(True) ' Lejárt a web
             If Webstat = 4 Then AfterEnd(False)
             If Pict0.Visible = False Then
                 If Paso.TabStop = False Then
                     If Cnt > 0 Then
                         BckTime.Text = Mid(Szhms(Cnt), 4, 5)
-                        Cnt = Cnt - 1
+                        Cnt = Cnt + vze
                     Else
                         If (Webstat = 1) Or (Webstat = 3) Then AfterEnd(True)
                         If (Webstat = 2) Or (Webstat = 4) Then AfterEnd(False)
@@ -203,6 +212,7 @@
                             Art = True
                             Pict0.TabStop = True ' cnt indul
                             PlayErr = 0                             '*** bad file 4× -> stop
+                            vze = True
                         Else
                             Rv = mciSendString("close asong", 0, 0, 0)
                             PlayErr = PlayErr + 1
@@ -224,6 +234,7 @@
                         Form2.TextBox1.Text = s
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♪ Web ♪"
+                        vze = True
                     End If
                 End If
             Case 2
@@ -248,6 +259,7 @@
                             Art = False
                             Pict0.TabStop = True ' cnt indul
                             PlayErr = 0
+                            vze = True
                         Else
                             Rv = mciSendString("close bsong", 0, 0, 0)
                             PlayErr = PlayErr + 1
@@ -269,6 +281,7 @@
                         Form2.TextBox1.Text = s
                         Form2.WBros.Navigate(s)
                         NowTime.Text = "♫ Web ♫"
+                        vze = True
                     End If
                 End If
         End Select
@@ -296,6 +309,7 @@
     End Sub
     Sub StopMCI(Cm As Short)
         Dim Rv As Integer = 0
+        PlyTimer.Enabled = False
         If Webstat > 0 Then
             'Web Stop from player
             If (Webstat = 1) And (Cm = 1) Then
@@ -305,6 +319,7 @@
                 Form2.SetRcnt(0, 0)
             End If
             Webstat = 0
+            vze = False
         End If
         If Cm = 1 Then
             Poz1.ForeColor = System.Drawing.Color.Black
@@ -314,6 +329,7 @@
             Rv = mciSendString("close asong", 0, 0, 0)
             NowTime.Text = " ♪ ♪ ♪ ♪ ♪"
             Pict1.Image = My.Resources.Arm00
+            vze = False
         End If
         If Cm = 2 Then
             Poz2.ForeColor = System.Drawing.Color.Black
@@ -323,13 +339,16 @@
             Rv = mciSendString("close bsong", 0, 0, 0)
             NowTime.Text = " ♫ ♫ ♫ ♫"
             Pict2.Image = My.Resources.Arm00
+            vze = False
         End If
         BckTime.ForeColor = System.Drawing.Color.Aqua
         If Paso.TabStop Then
             BckTime.Text = "Paso"
         Else
             BckTime.Text = Mid(Szhms(BackCtrl.Value), 4, 5)
+            '  Pict0.TabStop = False
         End If
+        PlyTimer.Enabled = True
     End Sub
     Private Sub Form1_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
         Dim x As Integer = 1000 * e.X / Width
