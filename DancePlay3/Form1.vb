@@ -10,6 +10,8 @@
     Dim Webstat As Short = 0
     Dim PlayErr As Short = 0
     Dim vze As Boolean = False
+    Dim v1 As Short = 0
+    Dim v2 As Short = 0
     Private Sub PlyTimer_Tick(sender As Object, e As EventArgs) Handles PlyTimer.Tick
         Dim Rv As Integer = 0
         Dim Rs As String = Space(128)
@@ -52,6 +54,17 @@
                     End If
                     Poz1.Left = Box1.Left + (Val(Rs) / ((ALenght + 1) / Box1.Width)) ' CSÚSZTATÁS o->
                     If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(True) ' SZÁMLÁLÓ LEJÁRT ->>
+                    If v1 > 0 Then
+                        v1 = v1 + v1 / 6
+                        Pict1.Image = My.Resources.Arm10
+                        If v1 < 100 Then
+                            Volreg(True, 100 - v1)
+                        Else
+                            v1 = 0
+                            Volreg(True, 100 - VolCtrl1.Value)
+                            AfterEnd(True)
+                        End If
+                    End If
                 End If
             End If '=============================================================================================
             If Poz2.ForeColor <> System.Drawing.Color.Black Then '            - Bre is -
@@ -88,6 +101,17 @@
                             Pict2.Image = My.Resources.Arm09
                     End Select
                     If Pict0.Visible = False And Pict0.TabStop And (Cnt < 1) Then AfterEnd(False)
+                    If v2 > 0 Then
+                        v2 = v2 + v2 / 6
+                        Pict2.Image = My.Resources.Arm10
+                        If v2 < 100 Then
+                            Volreg(False, 100 - v2)
+                        Else
+                            v2 = 0
+                            Volreg(False, 100 - VolCtrl2.Value)
+                            AfterEnd(False)
+                        End If
+                    End If
                 End If
             End If  '=============================================================================================
 
@@ -191,6 +215,7 @@
         Dim Rv As Integer = 0
         Dim Rs As String = Space(128)
         Dim s As String
+        v1 = 0 : v2 = 0
         Select Case Cm
             Case 1
                 If Box1.SelectedIndex > -1 Then
@@ -1701,6 +1726,11 @@ tova:
             If PlayErr > -1 Then PlayMCI(2) Else PlayErr = 0
         End If
     End Sub
-
+    Private Sub Pict1_Click(sender As Object, e As EventArgs) Handles Pict1.Click
+        v1 = VolCtrl1.Value
+    End Sub
+    Private Sub Pict2_Click(sender As Object, e As EventArgs) Handles Pict2.Click
+        v2 = VolCtrl2.Value
+    End Sub
     '@#@#@#@#@#@#@#@#@#@#  CLASS  #@#@#@#@#@#@#@#@#@#@#
 End Class
