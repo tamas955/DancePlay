@@ -12,6 +12,8 @@
     Dim vze As Boolean = False
     Dim v1 As Short = 0
     Dim v2 As Short = 0
+    Dim CDmode As Short = 0
+
     Private Sub PlyTimer_Tick(sender As Object, e As EventArgs) Handles PlyTimer.Tick
         Dim Rv As Integer = 0
         Dim Rs As String = Space(128)
@@ -749,6 +751,37 @@
         Dim LGen = ""
         l = InStrRev(mf, ".")
         x = UCase(Mid(mf, l + 1))
+
+        If x = "CDA" Then
+            If CDmode = 0 Then
+                RetVal = mciSendString(“open “ & Chr(34) & Mid(mf, 1, 3) & Chr(34) & ” type cdaudio alias cd wait shareable”, vbNullString, 0, 0)
+                RetVal = mciSendString("status cd ready", ReturnData, 128, 0)
+                ReturnData = Mid(LCase(ReturnData), 1, 1)
+                If ReturnData = "t" Then CDmode = 8 Else CDmode = 9
+            End If
+            If CDmode = 9 Then
+                Llng = "??:--:--"
+            End If
+            If CDmode = 8 Then
+                Tag = Mid(mf, 9, 2)
+                '  RetVal = mciSendString(“set cd time format tmsf”, vbNullString, 0, 0)
+                '  RetVal = mciSendString(“seek cd to “ & Tag, vbNullString, 0, 0)
+                RetVal = mciSendString("set cd time format ms", vbNullString, 0, 0)
+                ReturnData = Space(128)
+                RetVal = mciSendString("status cd length track " & Tag, ReturnData, 128, 0)
+                fLen = Val(ReturnData) / 1000
+                If fLen < 1 Then fLen = 1
+                Llng = Szhms(fLen)
+            End If
+            x = (Llng & " " & Mid(mf, 4))
+            If A Then
+                Box1.Items.Add(x)
+                Box11.Items.Add(mf)
+            Else
+                Box2.Items.Add(x)
+                Box22.Items.Add(mf)
+            End If
+        End If
         If x = "MP3" Or x = "WAV" Or x = "WMA" Or x = "MID" Then
             RetVal = mciSendString("open " & Chr(34) & mf & Chr(34) & " type mpegvideo alias song", vbNullString, 0, 0)
             If RetVal = 0 Then
