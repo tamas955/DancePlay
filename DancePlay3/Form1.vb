@@ -18,18 +18,23 @@
         Dim Rs As String = Space(128)
         Dim s As String
         Dim q As Long
+        Dim CdStrt As Long = 0
         '* * System time * *
         SysTime.Text = TimeString
         If Webstat = 0 Then ' web l. lejjebb
             If Poz1.ForeColor <> System.Drawing.Color.Black Then 'nem fekete a csúszka
                 Rv = mciSendString("status asong mode", Rs, 128, 0)
                 If LCase(Mid(Rs, 1, 4)) = "stop" Then
-                    Rv = mciSendString("close asong", 0, 0, 0)
+                    ' If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
                     AfterEnd(True) '                                 stop-hoz ért ->>
                 End If
                 If LCase(Mid(Rs, 1, 4)) = "play" Then
-                    ' Rv = mciSendString("set cd time format ms", vbNullString, 0, 0)
+                    If TipTxt1.Text = "CDA" Then
+                        Rv = mciSendString("status asong position track " & Tag, Rs, 128, 0)
+                        CdStrt = Val(Rs)
+                    End If
                     Rv = mciSendString("status asong position", Rs, 128, 0)
+                    Rs = Str(Val(Rs) - CdStrt + 1)
                     If InStr(Szhms(Val(Rs) / 1000), "Web") Then
                         NowTime.Text = "00:00:00"
                     Else '                                          Played time kiírás
@@ -66,6 +71,9 @@
                             Volreg(True, 100 - VolCtrl1.Value)
                             AfterEnd(True)
                         End If
+                    End If
+                    If TipTxt1.Text = "CDA" Then
+                        If (ALenght - Val(Rs)) < 0 Then AfterEnd(True)
                     End If
                 End If
             End If '=============================================================================================
@@ -217,6 +225,7 @@
         Dim Rv As Integer = 0
         Dim Rs As String = Space(128)
         Dim s As String
+        PlyTimer.Enabled = False
         v1 = 0 : v2 = 0
         Select Case Cm
             Case 1
@@ -234,38 +243,40 @@
                         Else
                             '**** MP3 ... *** *** *** ***
                             Rv = mciSendString("open " & Chr(34) & s & Chr(34) & " type mpegvideo alias asong", vbNullString, 0, 0)
-                    End If
-                    Rv = mciSendString("play asong", vbNullString, 0, 0)
+                        End If
+                        '*** MP3 & CDA ***
+                        Rv = mciSendString("play asong", vbNullString, 0, 0)
                         If Rv = 0 Then
                             Text = s
                             NowTxt1.Text = BoxTxt1.Text
                             If TipTxt1.Text = "CDA" Then
-                                Rv = mciSendString("status cd length track " & Tag, Rs, 128, 0)
+                                Rv = mciSendString("status asong length track " & Tag, Rs, 128, 0)
                             Else
                                 Rv = mciSendString("status asong length", Rs, 128, 0)
                             End If
                             ALenght = Val(Rs)
-                                TimTxt1.Text = Szhms(ALenght / 1000)
-                                Poz1.ForeColor = System.Drawing.Color.Yellow
-                                If Paso.TabStop Then Cnt = 4 + ALenght / 1000 Else Cnt = BackCtrl.Value
-                                Pict1.Image = My.Resources.Arm01
-                                Volreg(True, (100 - VolCtrl1.Value))
-                                Art = True
-                                Pict0.TabStop = True ' cnt indul
-                                PlayErr = 0                             '*** bad file 4× -> stop
-                                vze = True
+                            TimTxt1.Text = Szhms(ALenght / 1000)
+                            Poz1.ForeColor = System.Drawing.Color.Yellow
+                            If Paso.TabStop Then Cnt = 4 + ALenght / 1000 Else Cnt = BackCtrl.Value
+                            Pict1.Image = My.Resources.Arm01
+                            Volreg(True, (100 - VolCtrl1.Value))
+                            Art = True
+                            Pict0.TabStop = True ' cnt indul
+                            PlayErr = 0                             '*** bad file 4× -> stop
+                            vze = True
+                        Else
+                            Rv = mciSendString("stop asong", 0, 0, 0)
+                            ' If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
+                            PlayErr = PlayErr + 1
+                            If PlayErr < Box1.Items.Count Then
+                                AfterEnd(True)
                             Else
-                                Rv = mciSendString("close asong", 0, 0, 0)
-                                PlayErr = PlayErr + 1
-                                If PlayErr < Box1.Items.Count Then
-                                    AfterEnd(True)
-                                Else
-                                    PlayErr = -1
-                                    StopMCI(1)
-                                End If
+                                PlayErr = -1
+                                StopMCI(1)
                             End If
+                        End If
 
-                            Else
+                    Else
                         'TIPTXT1 WEB
                         Webstat = 1
                         Form2.SetRcnt(1, 500) ' BIZTONSÁGI IDŐ 8,33 '
@@ -327,6 +338,7 @@
                     End If
                 End If
         End Select
+        PlyTimer.Enabled = True
     End Sub
     Sub PauseMCI(Cm As Short)
         Dim Rv As Integer = 0
@@ -368,7 +380,7 @@
             NowTxt1.Text = "Dance Player"
             TimTxt1.Text = "00:00:00"
             Rv = mciSendString("stop asong", 0, 0, 0)
-            Rv = mciSendString("close asong", 0, 0, 0)
+            ' If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
             NowTime.Text = " ♪ ♪ ♪ ♪ ♪"
             Pict1.Image = My.Resources.Arm00
             vze = False
@@ -1665,7 +1677,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         PlyTimer.Enabled = False
         If A Then '============================ A  >>>>>>>>>>>>>>>>>>>>>>>>>>>>> A
             Rv = mciSendString("stop asong", 0, 0, 0)
-            Rv = mciSendString("close asong", 0, 0, 0)
+            '  If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
             N = Box1.SelectedIndex
             M = Box1.Items.Count
             If (M < 1) Or (N < 0) Then GoTo tova ' ( nem érvényes )
