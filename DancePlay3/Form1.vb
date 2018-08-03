@@ -26,6 +26,7 @@
                 Rv = mciSendString("status asong mode", Rs, 128, 0)
                 If LCase(Mid(Rs, 1, 4)) = "stop" Then
                     ' If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
+                    Rv = mciSendString("close asong", 0, 0, 0)
                     AfterEnd(True) '                                 stop-hoz ért ->>
                 End If
                 If LCase(Mid(Rs, 1, 4)) = "play" Then
@@ -267,6 +268,7 @@
                         Else
                             Rv = mciSendString("stop asong", 0, 0, 0)
                             ' If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
+                            Rv = mciSendString("close asong", 0, 0, 0)
                             PlayErr = PlayErr + 1
                             If PlayErr < Box1.Items.Count Then
                                 AfterEnd(True)
@@ -381,6 +383,7 @@
             TimTxt1.Text = "00:00:00"
             Rv = mciSendString("stop asong", 0, 0, 0)
             ' If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
+            Rv = mciSendString("close asong", 0, 0, 0)
             NowTime.Text = " ♪ ♪ ♪ ♪ ♪"
             Pict1.Image = My.Resources.Arm00
             vze = False
@@ -805,7 +808,7 @@
                 Box2.Items.Add(x)
                 Box22.Items.Add(mf)
             End If
-            RetVal = mciSendString("status cd close", ReturnData, 128, 0)
+            RetVal = mciSendString("cd close", ReturnData, 128, 0)
             CDmode = 0
         End If
         If x = "MP3" Or x = "WAV" Or x = "WMA" Or x = "MID" Then
@@ -1678,6 +1681,7 @@ Clos: '= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
         If A Then '============================ A  >>>>>>>>>>>>>>>>>>>>>>>>>>>>> A
             Rv = mciSendString("stop asong", 0, 0, 0)
             '  If TipTxt1.Text <> "CDA" Then Rv = mciSendString("close asong", 0, 0, 0) Else Rv = mciSendString("stop asong", 0, 0, 0)
+            Rv = mciSendString("close asong", 0, 0, 0)
             N = Box1.SelectedIndex
             M = Box1.Items.Count
             If (M < 1) Or (N < 0) Then GoTo tova ' ( nem érvényes )
